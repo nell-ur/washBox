@@ -1,11 +1,20 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": {
-      "commands": [
-        "composer install --optimize-autoloader --no-dev",
-        "php artisan optimize"
-      ]
+    "nixpacksConfig": {
+      "language": "php",
+      "phases": {
+        "install": {
+          "commands": [
+            "composer install --optimize-autoloader --no-dev"
+          ]
+        },
+        "build": {
+          "commands": [
+            "php artisan optimize"
+          ]
+        }
+      }
     }
   },
   "deploy": {
