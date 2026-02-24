@@ -1,0 +1,2 @@
+#!/bin/bash
+models=(User Customer Branch Order OrderStatusHistory Service Pricing Promotion SpecialItemPricing PromotionUsage Payment PickupRequest PickupStatusHistory Notification NotificationTemplate UnclaimedLaundry UnclaimedReminder CustomerRating ActivityLog Report SystemSetting DeviceToken); for model in "${models[@]}"; do php artisan make:model "$model" -m; done; echo "✅ 23 models + migrations created!"
