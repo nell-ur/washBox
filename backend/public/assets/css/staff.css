@@ -40,8 +40,8 @@ body {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 20px;
-    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    padding: 0.875rem 1.375rem;
 }
 
 .brand-hex-icon {
@@ -107,24 +107,24 @@ body {
 /* Modern Card Styles */
 .modern-card {
     background: white;
-    border-radius: 20px;
+    border-radius: 16px;
     border: 1px solid var(--slate-100);
 }
 
 .card-header-modern {
-    padding: 1.25rem 1.5rem;
+    padding: 0.875rem 1.25rem;
     border-bottom: 1px solid var(--slate-100);
 }
 
 .card-body-modern {
-    padding: 1.5rem;
+    padding: 1.1rem 1.25rem;
 }
 
 /* KPI Modern Cards */
 .kpi-card-modern {
     background: white;
-    border-radius: 20px;
-    padding: 1.5rem;
+    border-radius: 16px;
+    padding: 1.1rem 1.25rem;
     transition: all 0.3s ease;
     border: 1px solid var(--slate-100);
     height: 100%;
@@ -150,13 +150,13 @@ body {
 }
 
 .kpi-icon-glow {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .icon-blue {
@@ -210,7 +210,7 @@ body {
 }
 
 .kpi-value {
-    font-size: 2rem;
+    font-size: 1.65rem;
     font-weight: 800;
     color: var(--slate-800);
     margin-bottom: 0.5rem;
@@ -236,8 +236,8 @@ body {
 /* Launch Action Buttons */
 .launch-action-btn {
     background: white;
-    border-radius: 16px;
-    padding: 1.25rem 1rem;
+    border-radius: 13px;
+    padding: 0.9rem 0.875rem;
     border: 1px solid var(--slate-100);
     display: flex;
     flex-direction: column;
@@ -256,14 +256,14 @@ body {
 }
 
 .launch-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
-    margin-bottom: 12px;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
 }
 
 .launch-action-btn.blue .launch-icon {
@@ -310,8 +310,8 @@ body {
 /* Modern Tabs */
 .modern-tabs-container {
     background: white;
-    border-radius: 16px;
-    padding: 8px;
+    border-radius: 13px;
+    padding: 6px;
     border: 1px solid var(--slate-100);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -324,7 +324,7 @@ body {
 }
 
 .nav-segmented .nav-link {
-    padding: 0.75rem 1.5rem;
+    padding: 0.55rem 1.1rem;
     border-radius: 12px;
     color: var(--slate-600);
     font-weight: 600;
@@ -431,8 +431,8 @@ body {
 /* Metric Tiles */
 .metric-tile-modern {
     background: white;
-    padding: 1.25rem;
-    border-radius: 16px;
+    padding: 1rem;
+    border-radius: 13px;
     border-left: 5px solid;
     transition: all 0.3s ease;
     height: 100%;
@@ -624,7 +624,7 @@ body {
 /* Alerts Modern */
 .alert-modern {
     background: white;
-    padding: 1.25rem;
+    padding: 0.875rem 1.1rem;
     border-radius: 16px;
     border-left: 4px solid;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -750,9 +750,9 @@ body {
 /* ============================================ */
 .services-carousel-container {
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border-radius: 20px;
-    padding: 1.5rem 2rem;
-    margin-bottom: 1.5rem;
+    border-radius: 16px;
+    padding: 1rem 1.375rem;
+    margin-bottom: 1.25rem;
     border: 1px solid rgba(45, 43, 95, 0.1);
     box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
@@ -781,10 +781,10 @@ body {
 }
 
 .service-card-carousel {
-    flex: 0 0 220px;
+    flex: 0 0 200px;
     background: white;
-    border-radius: 16px;
-    padding: 1.25rem;
+    border-radius: 13px;
+    padding: 1rem;
     border: 1px solid #e2e8f0;
     transition: all 0.3s ease;
     position: relative;
@@ -1006,4 +1006,728 @@ body {
         scroll-behavior: auto; /* Better performance on mobile */
     }
 }
+}
+
+/* ================================================================ */
+/* DENSITY REDUCTION — 100% zoom optimisation                       */
+/* ================================================================ */
+
+.dashboard-modern-wrapper {
+    font-size: 0.9375rem;
+}
+
+.dashboard-modern-wrapper .row.g-4,
+.dashboard-modern-wrapper .row.g-6 {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+}
+
+.dashboard-modern-wrapper .mb-4,
+.dashboard-modern-wrapper .mb-6 {
+    margin-bottom: 1rem !important;
+}
+
+.dashboard-modern-wrapper .mt-4 {
+    margin-top: 1rem !important;
+}
+
+.dashboard-modern-wrapper.container-fluid {
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+}
+
+.kpi-label {
+    font-size: 0.68rem;
+    margin-bottom: 0.3rem;
+}
+
+.kpi-card-modern .kpi-card-inner .mt-3 {
+    margin-top: 0.625rem !important;
+}
+
+.chart-container {
+    height: 240px;
+}
+
+.m-icon-modern {
+    width: 34px;
+    height: 34px;
+    font-size: 1.05rem;
+    border-radius: 9px;
+}
+
+.metric-tile-modern h4 {
+    font-size: 1.25rem;
+}
+
+.progress-item-modern {
+    padding: 0.75rem;
+    margin-bottom: 0.625rem;
+}
+
+.revenue-stat-modern {
+    padding: 0.625rem 0.75rem;
+}
+
+.service-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    border-radius: 10px;
+}
+
+.service-price {
+    font-size: 1.05rem;
+    margin: 0.35rem 0;
+}
+
+.carousel-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+}
+
+.nav-segmented .nav-link {
+    font-size: 0.875rem;
+}
+
+.card-header-modern {
+    padding: 0.75rem 1.1rem;
+}
+
+.card-body-modern {
+    padding: 1rem 1.1rem;
+}
+
+/* ================================================================ */
+/* DARK MODE — staff.css                                            */
+/* Triggered by [data-theme="dark"] on <html> or <body>             */
+/* Matches admin dark mode palette exactly for system consistency   */
+/* ================================================================ */
+
+[data-theme="dark"] {
+    --slate-50:  #0f172a;
+    --slate-100: #1e293b;
+    --slate-200: #334155;
+    --slate-300: #475569;
+    --slate-400: #64748b;
+    --slate-500: #94a3b8;
+    --slate-600: #cbd5e1;
+    --slate-700: #e2e8f0;
+    --slate-800: #f1f5f9;
+    --slate-900: #f8fafc;
+    --danger-soft: rgba(239, 68, 68, 0.12);
+}
+
+[data-theme="dark"] body {
+    background-color: #0f172a;
+}
+
+/* ---- Glass Header ---- */
+[data-theme="dark"] .glass-header {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .glass-header h2,
+[data-theme="dark"] .glass-header .text-dark {
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .badge-status-live {
+    background: rgba(3, 105, 161, 0.25);
+    color: #7dd3fc;
+}
+
+[data-theme="dark"] .v-divider {
+    background: #334155;
+}
+
+/* ---- Services Carousel ---- */
+[data-theme="dark"] .services-carousel-container {
+    background: linear-gradient(135deg, #1e293b 0%, #162032 100%);
+    border-color: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .services-carousel-container h5 {
+    color: #a5b4fc !important;
+}
+
+[data-theme="dark"] .services-carousel-container p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .service-card-carousel {
+    background: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .service-card-carousel:hover {
+    border-color: #2D2B5F;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .service-card-carousel.active {
+    background: linear-gradient(135deg, #1e293b 0%, #253348 100%);
+    border-color: #6366f1;
+}
+
+/* "View All Services" card */
+[data-theme="dark"] .service-card-carousel[style*="dashed"] {
+    background: linear-gradient(135deg, #1e293b 0%, #162032 100%) !important;
+    border-color: #6366f1 !important;
+}
+
+[data-theme="dark"] .service-card-carousel h6 { color: #e2e8f0; }
+
+[data-theme="dark"] .service-badge.per-load {
+    background: rgba(3, 105, 161, 0.2);
+    color: #7dd3fc;
+}
+
+[data-theme="dark"] .service-badge.per-kg {
+    background: rgba(146, 64, 14, 0.2);
+    color: #fcd34d;
+}
+
+[data-theme="dark"] .service-price {
+    color: #a5b4fc;
+}
+
+[data-theme="dark"] .service-description {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .service-stats {
+    border-top-color: #334155;
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .service-stat-value { color: #e2e8f0; }
+
+[data-theme="dark"] .carousel-btn {
+    background: #1e293b;
+    border-color: #334155;
+    color: #a5b4fc;
+}
+
+[data-theme="dark"] .carousel-btn:hover {
+    background: #2D2B5F;
+    border-color: #2D2B5F;
+    color: white;
+}
+
+[data-theme="dark"] .carousel-progress { background: #334155; }
+
+/* ---- Filters Card ---- */
+[data-theme="dark"] .modern-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .card-header-modern {
+    border-color: #334155;
+}
+
+[data-theme="dark"] .modern-select {
+    background: #253348;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .modern-select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+[data-theme="dark"] .form-label { color: #cbd5e1 !important; }
+
+/* ---- Alerts Modern ---- */
+[data-theme="dark"] .alert-modern {
+    background: #1e293b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .alert-modern.alert-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-left-color: #f59e0b;
+}
+
+[data-theme="dark"] .alert-modern.alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border-left-color: #ef4444;
+}
+
+[data-theme="dark"] .alert-modern.alert-success {
+    background: rgba(16, 185, 129, 0.1);
+    border-left-color: #10b981;
+}
+
+[data-theme="dark"] .alert-modern.alert-warning .alert-icon-modern {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fcd34d;
+}
+
+[data-theme="dark"] .alert-modern.alert-danger .alert-icon-modern {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+[data-theme="dark"] .alert-modern.alert-success .alert-icon-modern {
+    background: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+}
+
+[data-theme="dark"] .alert-title-modern { color: #f1f5f9; }
+[data-theme="dark"] .alert-text-modern  { color: #94a3b8; }
+
+/* ---- KPI Cards ---- */
+[data-theme="dark"] .kpi-card-modern {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .kpi-card-modern:hover {
+    border-color: #6366f1;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .kpi-card-modern.kpi-warning {
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+[data-theme="dark"] .kpi-card-modern.kpi-success {
+    border-color: rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="dark"] .kpi-card-modern.border-danger-soft {
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .kpi-value              { color: #f1f5f9; }
+[data-theme="dark"] .kpi-value.text-slate-800 { color: #f1f5f9 !important; }
+[data-theme="dark"] .kpi-label              { color: #94a3b8; }
+
+[data-theme="dark"] .badge.bg-danger-soft {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #fca5a5 !important;
+}
+
+/* KPI icon glow boxes */
+[data-theme="dark"] .kpi-icon-glow.icon-blue   { background: rgba(37, 99, 235, 0.18); }
+[data-theme="dark"] .kpi-icon-glow.icon-green  { background: rgba(16, 185, 129, 0.15); }
+[data-theme="dark"] .kpi-icon-glow.icon-indigo { background: rgba(79, 70, 229, 0.18); }
+[data-theme="dark"] .kpi-icon-glow.icon-red    { background: rgba(239, 68, 68, 0.15); }
+[data-theme="dark"] .kpi-icon-glow.icon-orange { background: rgba(249, 115, 22, 0.15); }
+[data-theme="dark"] .kpi-icon-glow.icon-purple { background: rgba(139, 92, 246, 0.18); }
+[data-theme="dark"] .kpi-icon-glow.icon-pink   { background: rgba(236, 72, 153, 0.15); }
+[data-theme="dark"] .kpi-icon-glow.icon-cyan   { background: rgba(8, 145, 178, 0.18); }
+
+/* ---- Quick Actions ---- */
+[data-theme="dark"] .launch-action-btn {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .launch-action-btn:hover {
+    border-color: #6366f1;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .launch-action-btn .action-label { color: #e2e8f0; }
+
+[data-theme="dark"] .launch-action-btn.blue   .launch-icon { background: rgba(37, 99, 235, 0.2);  color: #93c5fd; }
+[data-theme="dark"] .launch-action-btn.indigo .launch-icon { background: rgba(79, 70, 229, 0.2);  color: #a5b4fc; }
+[data-theme="dark"] .launch-action-btn.cyan   .launch-icon { background: rgba(8, 145, 178, 0.2);  color: #67e8f9; }
+[data-theme="dark"] .launch-action-btn.red    .launch-icon { background: rgba(239, 68, 68, 0.2);  color: #fca5a5; }
+[data-theme="dark"] .launch-action-btn.purple .launch-icon { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+[data-theme="dark"] .launch-action-btn.green  .launch-icon { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+[data-theme="dark"] .launch-action-btn.orange .launch-icon { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
+
+/* ---- Tabs ---- */
+[data-theme="dark"] .modern-tabs-container {
+    background: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .nav-segmented .nav-link { color: #94a3b8; }
+
+[data-theme="dark"] .nav-segmented .nav-link:not(.active):hover {
+    background: #253348;
+    color: #e2e8f0;
+}
+
+/* ---- Card headings with inline text-slate-800 ---- */
+[data-theme="dark"] .text-slate-800,
+[data-theme="dark"] h6.text-slate-800,
+[data-theme="dark"] .fw-800.text-slate-800 { color: #f1f5f9 !important; }
+
+[data-theme="dark"] .text-slate-600 { color: #cbd5e1 !important; }
+[data-theme="dark"] .text-slate-500 { color: #94a3b8 !important; }
+
+/* ---- Pipeline (Overview Tab) ---- */
+[data-theme="dark"] .pipeline-label-modern { color: #e2e8f0; }
+[data-theme="dark"] .pipeline-value-modern { color: #94a3b8; }
+
+[data-theme="dark"] .progress-bar-modern { background: #334155; }
+
+[data-theme="dark"] .progress-item-modern {
+    background: #253348;
+}
+
+[data-theme="dark"] .progress-item-modern h6 { color: #e2e8f0; }
+
+/* ---- Revenue Stats (Revenue Tab) ---- */
+[data-theme="dark"] .revenue-stat-modern {
+    background: #253348;
+}
+
+[data-theme="dark"] .revenue-label-modern { color: #94a3b8; }
+[data-theme="dark"] .revenue-value-modern { color: #f1f5f9; }
+
+/* ---- Metric Tiles (Revenue Tab) ---- */
+[data-theme="dark"] .metric-tile-modern {
+    background: #1e293b;
+}
+
+[data-theme="dark"] .metric-tile-modern:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .metric-tile-modern h4    { color: #f1f5f9; }
+[data-theme="dark"] .metric-tile-modern small { color: #94a3b8; }
+
+[data-theme="dark"] .m-icon-modern.icon-blue   { background: rgba(37, 99, 235, 0.18); }
+[data-theme="dark"] .m-icon-modern.icon-green  { background: rgba(16, 185, 129, 0.15); }
+[data-theme="dark"] .m-icon-modern.icon-indigo { background: rgba(79, 70, 229, 0.18); }
+[data-theme="dark"] .m-icon-modern.icon-cyan   { background: rgba(8, 145, 178, 0.18); }
+
+/* ---- Branch Performance (Branches Tab) ---- */
+[data-theme="dark"] .branch-icon-modern {
+    background: linear-gradient(135deg, #2D2B5F, #4f46e5);
+}
+
+/* ---- Pickup List (Overview Tab) ---- */
+[data-theme="dark"] .pickup-list-item {
+    background: #1e293b;
+    border-color: #334155 !important;
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .pickup-list-item:hover { background: #253348; }
+
+[data-theme="dark"] .pickup-list-item.selected {
+    background: rgba(139, 92, 246, 0.12) !important;
+    border-color: #8B5CF6 !important;
+}
+
+[data-theme="dark"] .pickup-list-item .fw-600   { color: #e2e8f0; }
+[data-theme="dark"] .pickup-list-item .text-muted { color: #64748b !important; }
+
+[data-theme="dark"] #pickupListContainer {
+    scrollbar-color: #475569 #1e293b;
+}
+
+/* ---- Map search card ---- */
+[data-theme="dark"] .card.shadow-lg {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .card.shadow-lg .card-body { background: #1e293b; }
+[data-theme="dark"] .card.shadow-lg h6         { color: #e2e8f0; }
+
+[data-theme="dark"] #map-address-search {
+    background: #253348;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] #map-address-search::placeholder { color: #64748b; }
+
+[data-theme="dark"] #search-result-display .alert-success {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: rgba(16, 185, 129, 0.3) !important;
+    color: #6ee7b7 !important;
+}
+
+/* ---- Route Details Panel ---- */
+[data-theme="dark"] .route-details-panel {
+    background: #1e293b;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Laundries Table (Laundries Tab) ---- */
+[data-theme="dark"] .table-modern {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .table-modern td {
+    color: #e2e8f0;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .table-modern tbody tr:hover { background: #253348; }
+
+[data-theme="dark"] .tracking-number-modern { color: #93c5fd; }
+[data-theme="dark"] .customer-name-modern   { color: #e2e8f0; }
+
+[data-theme="dark"] .branch-badge-modern {
+    background: rgba(79, 70, 229, 0.18);
+    color: #a5b4fc;
+}
+
+[data-theme="dark"] .amount-modern { color: #6ee7b7; }
+
+/* Status badge dark variants */
+[data-theme="dark"] .status-badge-modern.status-received {
+    background: rgba(30, 64, 175, 0.25);
+    color: #93c5fd;
+}
+
+[data-theme="dark"] .status-badge-modern.status-ready {
+    background: rgba(146, 64, 14, 0.25);
+    color: #fcd34d;
+}
+
+[data-theme="dark"] .status-badge-modern.status-paid {
+    background: rgba(6, 95, 70, 0.3);
+    color: #6ee7b7;
+}
+
+[data-theme="dark"] .status-badge-modern.status-completed {
+    background: rgba(55, 48, 163, 0.25);
+    color: #a5b4fc;
+}
+
+[data-theme="dark"] .date-text-modern { color: #e2e8f0; }
+[data-theme="dark"] .time-text-modern { color: #64748b; }
+
+[data-theme="dark"] .btn-icon-modern {
+    background: #334155;
+    border-color: #475569;
+    color: #cbd5e1;
+}
+
+[data-theme="dark"] .btn-icon-modern:hover {
+    background: #475569;
+    color: #93c5fd;
+}
+
+[data-theme="dark"] .empty-state-modern { color: #475569; }
+
+/* ---- Pickup status summary numbers ---- */
+[data-theme="dark"] .fw-800.fs-5 { color: #f1f5f9; }
+
+/* ---- Modal ---- */
+[data-theme="dark"] .modal-content {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+/* ---- Borders & Dividers ---- */
+[data-theme="dark"] .dashboard-modern-wrapper .border-bottom { border-color: #334155 !important; }
+[data-theme="dark"] .dashboard-modern-wrapper hr              { border-color: #334155; opacity: 0.5; }
+
+/* ---- General text & bg helpers ---- */
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6          { color: #e2e8f0; }
+
+[data-theme="dark"] small.text-muted,
+[data-theme="dark"] p.text-muted,
+[data-theme="dark"] .text-muted  { color: #94a3b8 !important; }
+
+[data-theme="dark"] .dashboard-modern-wrapper p { color: #cbd5e1; }
+
+[data-theme="dark"] .dashboard-modern-wrapper .bg-light { background: #1e293b !important; }
+
+[data-theme="dark"] .selected-pickup {
+    background-color: rgba(139, 92, 246, 0.15) !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
+}
+
+[data-theme="dark"] .text-primary-blue { color: #60a5fa !important; }
+
+/* ================================================================ */
+/* BLADE-DRIVEN SEMANTIC CLASSES                                    */
+/* Replaces all inline style="" colour overrides in the blade       */
+/* so dark mode can properly override them via [data-theme="dark"] */
+/* ================================================================ */
+
+/* Dashboard title (replaces text-dark which can't be dark-mode-overridden) */
+.dashboard-title {
+    color: var(--slate-900);
+}
+
+[data-theme="dark"] .dashboard-title {
+    color: #f1f5f9;
+}
+
+/* ---- Addon service card badge ---- */
+.service-badge-addon {
+    background: #f0fdf4;
+    color: #166534;
+}
+
+[data-theme="dark"] .service-badge-addon {
+    background: rgba(16, 185, 129, 0.18);
+    color: #6ee7b7;
+}
+
+/* ---- Addon service icon wrapper ---- */
+.service-icon-addon {
+    background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+}
+
+[data-theme="dark"] .service-icon-addon {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.8) 0%, rgba(52, 211, 153, 0.7) 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+/* ---- View All Services card ---- */
+.service-card-view-all {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 2px dashed var(--primary-color) !important;
+}
+
+[data-theme="dark"] .service-card-view-all {
+    background: linear-gradient(135deg, #1e293b 0%, #162032 100%) !important;
+    border-color: #6366f1 !important;
+}
+
+/* ---- View All icon wrapper ---- */
+.service-icon-view-all {
+    background: var(--primary-color);
+    opacity: 0.85;
+}
+
+[data-theme="dark"] .service-icon-view-all {
+    background: rgba(99, 102, 241, 0.7);
+    opacity: 1;
+}
+
+/* ---- Form labels (replaces text-slate-700 inline class) ---- */
+.form-label {
+    color: var(--slate-700);
+}
+
+[data-theme="dark"] .form-label {
+    color: #cbd5e1 !important;
+}
+
+/* ---- Status dots (replaces inline style="background: #hex") ---- */
+.status-dot-blue    { background: #3b82f6; }
+.status-dot-warning { background: #f59e0b; }
+.status-dot-success { background: #10b981; }
+.status-dot-indigo  { background: #6366f1; }
+
+/* ---- Progress fill colours (replaces inline style="background: gradient") ---- */
+.progress-fill-blue    { background: #3b82f6; }
+.progress-fill-warning { background: #f59e0b; }
+.progress-fill-success { background: #10b981; }
+.progress-fill-indigo  { background: #6366f1; }
+
+/* Brand gradient — used for total revenue and branch performance bars */
+.progress-fill-brand {
+    background: linear-gradient(to right, #2D2B5F, #FF5C35);
+}
+
+/* Blue-purple gradient — used for average laundry value */
+.progress-fill-blue-purple {
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+}
+
+/* Green-blue gradient — used for laundries processed */
+.progress-fill-green-blue {
+    background: linear-gradient(to right, #10b981, #3b82f6);
+}
+
+/* Dark mode tones for solid-colour progress fills */
+[data-theme="dark"] .progress-fill-blue    { background: #60a5fa; }
+[data-theme="dark"] .progress-fill-warning { background: #fbbf24; }
+[data-theme="dark"] .progress-fill-success { background: #34d399; }
+[data-theme="dark"] .progress-fill-indigo  { background: #818cf8; }
+
+/* Gradient fills remain readable in dark mode — no override needed */
+
+/* Mark All Read button in notification dropdown */
+.mark-all-read-btn {
+    font-size: 0.75rem;
+}
+
+/* ================================================================
+   MAP POPUP — dark mode aware (used by dynamically generated HTML)
+   ================================================================ */
+.map-popup-card {
+    color: #1e293b;
+    background: #ffffff;
+}
+
+.map-popup-muted {
+    color: #64748b;
+}
+
+[data-theme="dark"] .map-popup-card {
+    /* Leaflet overrides popup background via its own styles;
+       these classes apply to the inner wrapper only */
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .map-popup-muted {
+    color: #94a3b8;
+}
+
+/* Leaflet popup container dark mode */
+[data-theme="dark"] .leaflet-popup-content-wrapper {
+    background: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+}
+
+[data-theme="dark"] .leaflet-popup-tip {
+    background: #1e293b;
+}
+
+[data-theme="dark"] .leaflet-popup-content-wrapper hr {
+    border-color: #334155;
+}
+
+/* ================================================================
+   ROUTE DETAILS PANEL — dark mode aware
+   ================================================================ */
+.route-panel-card {
+    background: var(--card-bg, #ffffff);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.route-muted {
+    color: #64748b;
+    font-size: 0.8125rem;
+}
+
+[data-theme="dark"] .route-panel-card {
+    background: #1e293b;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .route-panel-card .card-body {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .route-panel-card hr {
+    border-color: #334155;
+}
+
+[data-theme="dark"] .route-muted {
+    color: #94a3b8;
 }

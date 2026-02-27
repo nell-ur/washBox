@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Laundry;
 use App\Models\Branch;
+use App\Models\AddOn;
 use App\Models\Service;
 use App\Models\Customer;
+use App\Models\CustomerRating;
 use App\Models\Promotion;
 use App\Models\PickupRequest;
 use App\Models\SystemSetting;
@@ -52,6 +54,7 @@ class DashboardController extends Controller
 
         // 3. Laundry Pipeline Status
         $laundryPipeline = $this->getLaundryPipeline();
+        $branchPipeline  = $this->getLaundryPipelineByBranch();
 
         // 4. Customer Management
         $customerData = $this->getCustomerStats($currentMonth);
@@ -100,23 +103,29 @@ class DashboardController extends Controller
             'avgProcessingTime' => $this->calculateAverageProcessingTime(),
 
             // Laundry Management
-            'laundryPipeline' => $laundryPipeline,
-            'totalLaundries' => array_sum($laundryPipeline),
+            'laundryPipeline'  => $laundryPipeline,
+            'branchPipeline'   => $branchPipeline,
+            'totalLaundries'   => array_sum($laundryPipeline),
 
             // Unclaimed & Pickups
-            'unclaimedBreakdown' => $unclaimedBreakdown,
-            'pickupStats' => $pickupStats,
-            'pendingPickups' => $this->getPendingPickups(), // Important for map
+            'unclaimedBreakdown'    => $unclaimedBreakdown,
+            'pickupStats'           => $pickupStats,
+            'pendingPickups'        => $this->getPendingPickups(), // Important for map
+            'pickupBranchPipeline'  => $this->getPickupPipelineByBranch(),
 
             // Customer Management
             'customerRegistrationSource' => $customerRegistrationSource,
+            'customerBranchPipeline'    => $this->getCustomerPipelineByBranch(),
+            'topCustomers'              => $this->getTopCustomers(),
+            'topRatedCustomers'         => $this->getTopRatedCustomers(),
 
             // Notifications
             'notificationStats' => $notificationStats,
 
             // Revenue & Payment
-            'paymentCollection' => $paymentCollection,
-            'revenueByService' => $this->getRevenueByService(),
+            'paymentCollection'  => $paymentCollection,
+            'revenueByService'   => $this->getRevenueByService(),
+            'serviceChartData'   => $this->getServiceChartData(),
 
             // Branch Performance
             'branchPerformance' => $branchPerformance,
@@ -235,6 +244,97 @@ class DashboardController extends Controller
         ];
     }
 
+    private function getCustomerPipelineByBranch()
+    {
+        // Customers have preferred_branch_id directly on the customers table.
+        // Registration types are: 'walk_in' and 'self_registered'.
+        $raw = Customer::select(
+                'preferred_branch_id',
+                'registration_type',
+                DB::raw('COUNT(*) as count')
+            )
+            ->whereNotNull('preferred_branch_id')
+            ->groupBy('preferred_branch_id', 'registration_type')
+            ->get()
+            ->groupBy('preferred_branch_id');
+
+        $branches = Branch::select('id', 'name')->orderBy('name')->get();
+
+        return $branches->map(function ($branch) use ($raw) {
+            $rows     = $raw->get($branch->id, collect());
+            $walkIn   = 0;
+            $mobile   = 0;
+
+            foreach ($rows as $row) {
+                $type = strtolower(trim((string) $row->registration_type));
+                $cnt  = (int) $row->count;
+
+                if ($type === 'self_registered') {
+                    $mobile += $cnt;   // self-registered = mobile app customer
+                } else {
+                    $walkIn += $cnt;   // walk_in (default)
+                }
+            }
+
+            $total = $walkIn + $mobile;
+            if ($total === 0) return null;
+
+            return [
+                'id'      => $branch->id,
+                'name'    => $branch->name,
+                'walk_in' => $walkIn,
+                'mobile'  => $mobile,
+                'total'   => $total,
+            ];
+        })->filter()->values()->toArray();
+    }
+
+    private function getTopCustomers(int $limit = 5)
+    {
+        return Customer::withSum('laundries', 'total_amount')
+            ->withCount('laundries')
+            ->orderByDesc('laundries_sum_total_amount')
+            ->limit($limit)
+            ->get()
+            ->map(fn($c) => [
+                'id'             => $c->id,
+                'name'           => $c->name,
+                'laundries_count'=> (int) $c->laundries_count,
+                'total_spent'    => (float) ($c->laundries_sum_total_amount ?? 0),
+            ])->toArray();
+    }
+
+    private function getTopRatedCustomers(int $limit = 5)
+    {
+        // Use a subquery to get rating stats first, then join to customers
+        // to avoid ONLY_FULL_GROUP_BY issues in strict MySQL mode.
+        $ratingStats = CustomerRating::select('customer_id')
+            ->selectRaw('ROUND(AVG(rating), 1) as avg_rating')
+            ->selectRaw('COUNT(id) as ratings_count')
+            ->groupBy('customer_id')
+            ->having('ratings_count', '>=', 1)
+            ->orderByDesc('avg_rating')
+            ->orderByDesc('ratings_count')
+            ->limit($limit)
+            ->get();
+
+        $customerIds = $ratingStats->pluck('customer_id');
+
+        $customers = Customer::whereIn('id', $customerIds)->get()->keyBy('id');
+
+        return $ratingStats->map(function ($stat) use ($customers) {
+            $customer = $customers->get($stat->customer_id);
+            if (!$customer) return null;
+
+            return [
+                'id'            => $customer->id,
+                'name'          => $customer->name,
+                'avg_rating'    => (float) $stat->avg_rating,
+                'ratings_count' => (int)   $stat->ratings_count,
+            ];
+        })->filter()->values()->toArray();
+    }
+
     private function getUnclaimedStats()
     {
         $unclaimed = UnclaimedLaundry::whereNull('recovered_at')
@@ -259,6 +359,37 @@ class DashboardController extends Controller
             ->groupBy('status')
             ->pluck('count', 'status')
             ->toArray();
+    }
+
+    private function getPickupPipelineByBranch()
+    {
+        $statuses = ['pending', 'accepted', 'en_route', 'picked_up', 'cancelled'];
+
+        // Single grouped query — no N+1
+        $raw = PickupRequest::select('branch_id', 'status', DB::raw('count(*) as count'))
+            ->whereIn('status', $statuses)
+            ->groupBy('branch_id', 'status')
+            ->get()
+            ->groupBy('branch_id');
+
+        $branches = Branch::select('id', 'name')->orderBy('name')->get();
+
+        return $branches->map(function ($branch) use ($raw, $statuses) {
+            $rows = $raw->get($branch->id, collect());
+
+            $counts = collect($statuses)->mapWithKeys(function ($s) use ($rows) {
+                $row = $rows->firstWhere('status', $s);
+                return [$s => $row ? (int) $row->count : 0];
+            })->toArray();
+
+            return [
+                'id'       => $branch->id,
+                'name'     => $branch->name,
+                'statuses' => $counts,
+                'total'    => array_sum($counts),
+                'active'   => ($counts['pending'] ?? 0) + ($counts['accepted'] ?? 0) + ($counts['en_route'] ?? 0),
+            ];
+        })->values()->toArray();
     }
 
     private function getPendingPickups()
@@ -436,6 +567,126 @@ class DashboardController extends Controller
                 ];
             })
             ->toArray();
+    }
+
+    private function getLaundryPipelineByBranch()
+    {
+        $statuses = ['received', 'processing', 'ready', 'completed', 'cancelled'];
+
+        $raw = Laundry::select('branch_id', 'status', DB::raw('count(*) as count'))
+            ->whereIn('status', $statuses)
+            ->groupBy('branch_id', 'status')
+            ->get()
+            ->groupBy('branch_id');
+
+        $branches = Branch::select('id', 'name')->orderBy('name')->get();
+
+        return $branches->map(function ($branch) use ($raw, $statuses) {
+            $rows = $raw->get($branch->id, collect());
+
+            $counts = collect($statuses)->mapWithKeys(function ($s) use ($rows) {
+                $row = $rows->firstWhere('status', $s);
+                return [$s => $row ? (int) $row->count : 0];
+            })->toArray();
+
+            $total = array_sum($counts);
+            if ($total === 0) return null;
+
+            return [
+                'id'       => $branch->id,
+                'name'     => $branch->name,
+                'statuses' => $counts,
+                'total'    => $total,
+            ];
+        })->filter()->values()->toArray();
+    }
+
+    private function getServiceChartData()
+    {
+        // Services table covers drop_off and self_service categories
+        $services = Service::where('is_active', true)
+            ->withCount(['laundries as laundry_count'  => fn($q) => $q->where('status', '!=', 'cancelled')])
+            ->withSum(['laundries as laundry_revenue'  => fn($q) => $q->where('status', '!=', 'cancelled')], 'total_amount')
+            ->orderBy('name')
+            ->get();
+
+        // Add-ons are a separate model/table (add_ons) — query them independently
+        // withSum can't reach pivot columns, so use a raw subquery for revenue
+        $addons = AddOn::where('is_active', true)
+            ->withCount('laundries as laundry_count')
+            ->selectRaw('add_ons.*, (
+                SELECT COALESCE(SUM(la.price_at_purchase * la.quantity), 0)
+                FROM laundry_addon la
+                WHERE la.add_on_id = add_ons.id
+            ) as laundry_revenue')
+            ->orderBy('name')
+            ->get();
+
+        $grandCount   = (int)   $services->sum('laundry_count') + (int) $addons->sum('laundry_count');
+        $grandRevenue = (float) $services->sum('laundry_revenue') + (float) $addons->sum('laundry_revenue');
+
+        $buckets = [
+            'drop_off'     => ['labels' => [], 'counts' => [], 'revenues' => [], 'total' => 0],
+            'self_service' => ['labels' => [], 'counts' => [], 'revenues' => [], 'total' => 0],
+            'addon'        => ['labels' => [], 'counts' => [], 'revenues' => [], 'total' => 0],
+        ];
+
+        $allServices = [];
+
+        // Bucket services by category
+        foreach ($services as $svc) {
+            $cat   = strtolower(trim((string) ($svc->category ?? 'drop_off')));
+            if (!isset($buckets[$cat])) $cat = 'drop_off';
+
+            $count = (int)   ($svc->laundry_count   ?? 0);
+            $rev   = (float) ($svc->laundry_revenue  ?? 0);
+
+            $buckets[$cat]['labels'][]   = $svc->name;
+            $buckets[$cat]['counts'][]   = $count;
+            $buckets[$cat]['revenues'][] = $rev;
+            $buckets[$cat]['total']      += $count;
+
+            $allServices[] = [
+                'id'          => $svc->id,
+                'name'        => $svc->name,
+                'category'    => $cat,
+                'count'       => $count,
+                'revenue'     => $rev,
+                'count_pct'   => $grandCount   > 0 ? round(($count / $grandCount)   * 100, 1) : 0,
+                'revenue_pct' => $grandRevenue > 0 ? round(($rev   / $grandRevenue) * 100, 1) : 0,
+            ];
+        }
+
+        // Bucket add-ons (always 'addon' category)
+        foreach ($addons as $addon) {
+            $count = (int)   ($addon->laundry_count   ?? 0);
+            $rev   = (float) ($addon->laundry_revenue  ?? 0);
+
+            $buckets['addon']['labels'][]   = $addon->name;
+            $buckets['addon']['counts'][]   = $count;
+            $buckets['addon']['revenues'][] = $rev;
+            $buckets['addon']['total']      += $count;
+
+            $allServices[] = [
+                'id'          => $addon->id,
+                'name'        => $addon->name . ' (Add-On)',
+                'category'    => 'addon',
+                'count'       => $count,
+                'revenue'     => $rev,
+                'count_pct'   => $grandCount   > 0 ? round(($count / $grandCount)   * 100, 1) : 0,
+                'revenue_pct' => $grandRevenue > 0 ? round(($rev   / $grandRevenue) * 100, 1) : 0,
+            ];
+        }
+
+        usort($allServices, fn($a, $b) => $b['count'] <=> $a['count']);
+
+        return [
+            'drop_off'     => $buckets['drop_off'],
+            'self_service' => $buckets['self_service'],
+            'addon'        => $buckets['addon'],
+            'all_services' => $allServices,
+            'grand_total'  => ['count' => $grandCount, 'revenue' => $grandRevenue],
+        ];
     }
 
     /**

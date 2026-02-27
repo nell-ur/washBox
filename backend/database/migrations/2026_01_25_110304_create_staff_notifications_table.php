@@ -1,5 +1,5 @@
+// database/migrations/2026_01_02_000019_create_staff_notifications_table.php
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('staff_notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Staff user
-            $table->string('type'); // pickup_assigned, order_assigned, etc.
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('type');
             $table->string('title');
             $table->text('message');
             $table->string('icon')->default('bell');

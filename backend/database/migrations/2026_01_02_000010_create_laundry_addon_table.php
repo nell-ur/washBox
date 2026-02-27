@@ -1,4 +1,4 @@
-// database/migrations/2026_01_02_000011_create_laundry_service_addon_table.php
+// database/migrations/2026_01_02_000010_create_laundry_addon_table.php
 <?php
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -8,20 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('laundry_service_addon', function (Blueprint $table) {
+        Schema::create('laundry_addon', function (Blueprint $table) {
             $table->id();
             $table->foreignId('laundries_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('service_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('add_on_id')->constrained()->cascadeOnDelete();
             $table->decimal('price_at_purchase', 10, 2);
             $table->integer('quantity')->default(1);
             $table->timestamps();
 
-            $table->unique(['laundries_id', 'service_id']);
+            $table->unique(['laundries_id', 'add_on_id']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('laundry_service_addon');
+        Schema::dropIfExists('laundry_addon');
     }
 };

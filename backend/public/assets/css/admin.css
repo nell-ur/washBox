@@ -885,3 +885,1581 @@ body {
 html {
     scroll-behavior: smooth;
 }
+/* ================================================================ */
+/* DARK MODE — admin.css                                            */
+/* Triggered by [data-theme="dark"] on <html> or <body>             */
+/* Covers every component used in the dashboard blade               */
+/* ================================================================ */
+
+/* ---- Dark mode CSS variable overrides scoped to dashboard ---- */
+[data-theme="dark"] {
+    --slate-50:  #0f172a;
+    --slate-100: #1e293b;
+    --slate-200: #334155;
+    --slate-300: #475569;
+    --slate-400: #64748b;
+    --slate-500: #94a3b8;
+    --slate-600: #cbd5e1;
+    --slate-700: #e2e8f0;
+    --slate-800: #f1f5f9;
+    --slate-900: #f8fafc;
+    --danger-soft: rgba(239, 68, 68, 0.12);
+}
+
+/* ---- Body background ---- */
+[data-theme="dark"] body {
+    background-color: #0f172a;
+}
+
+/* ================================================================ */
+/* GLASS HEADER                                                     */
+/* ================================================================ */
+[data-theme="dark"] .glass-header {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .badge-status-live {
+    background: rgba(3, 105, 161, 0.25);
+    color: #7dd3fc;
+}
+
+[data-theme="dark"] .v-divider {
+    background: #334155;
+}
+
+/* ================================================================ */
+/* SYSTEM STATUS CARDS (top 4 gradient cards)                       */
+/* These have their own gradients so they don't need bg overrides,  */
+/* but text and icon box may need adjusting.                        */
+/* ================================================================ */
+[data-theme="dark"] .status-icon-box {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ================================================================ */
+/* KPI CARDS                                                        */
+/* ================================================================ */
+[data-theme="dark"] .kpi-card-modern {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .kpi-card-modern:hover {
+    border-color: #2563eb;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .kpi-card-modern.border-danger-soft {
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .kpi-value {
+    color: #f1f5f9;
+}
+
+/* Override the inline text-slate-800 class on kpi-value */
+[data-theme="dark"] .kpi-value.text-slate-800 {
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .kpi-label {
+    color: #94a3b8;
+}
+
+/* Icon glow boxes */
+[data-theme="dark"] .kpi-icon-glow.icon-blue  { background: rgba(37, 99, 235, 0.18); }
+[data-theme="dark"] .kpi-icon-glow.icon-green { background: rgba(16, 185, 129, 0.15); }
+[data-theme="dark"] .kpi-icon-glow.icon-indigo { background: rgba(79, 70, 229, 0.18); }
+[data-theme="dark"] .kpi-icon-glow.icon-red   { background: rgba(239, 68, 68, 0.15); }
+
+/* Unclaimed critical badge */
+[data-theme="dark"] .badge.bg-danger-soft {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #fca5a5 !important;
+}
+
+/* ================================================================ */
+/* MODERN CARDS (white cards throughout)                            */
+/* ================================================================ */
+[data-theme="dark"] .modern-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .card-header-modern {
+    border-color: #334155;
+}
+
+/* Card titles that use text-slate-800 inline class */
+[data-theme="dark"] .text-slate-800,
+[data-theme="dark"] h6.text-slate-800,
+[data-theme="dark"] .fw-800.text-slate-800 {
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .text-slate-600 { color: #cbd5e1 !important; }
+[data-theme="dark"] .text-slate-500 { color: #94a3b8 !important; }
+
+/* Unclaimed card header */
+[data-theme="dark"] .card-header-modern.bg-danger-soft {
+    background: rgba(239, 68, 68, 0.1) !important;
+}
+
+[data-theme="dark"] .modern-card.border-danger-soft {
+    border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Alert inside unclaimed card */
+[data-theme="dark"] .alert.bg-danger-soft {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border-color: rgba(239, 68, 68, 0.2) !important;
+    color: #fca5a5 !important;
+}
+
+[data-theme="dark"] .alert.bg-danger-soft strong {
+    color: #fca5a5;
+}
+
+/* ================================================================ */
+/* QUICK ACTIONS — launch-action-btn                                */
+/* ================================================================ */
+[data-theme="dark"] .launch-action-btn {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .launch-action-btn:hover {
+    border-color: #2563eb;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .launch-action-btn .action-label {
+    color: #e2e8f0;
+}
+
+/* Launch icon backgrounds in dark mode */
+[data-theme="dark"] .launch-action-btn.blue   .launch-icon { background: rgba(37, 99, 235, 0.2);  }
+[data-theme="dark"] .launch-action-btn.indigo .launch-icon { background: rgba(79, 70, 229, 0.2);  }
+[data-theme="dark"] .launch-action-btn.cyan   .launch-icon { background: rgba(8, 145, 178, 0.2);  }
+[data-theme="dark"] .launch-action-btn.red    .launch-icon { background: rgba(239, 68, 68, 0.2);  }
+[data-theme="dark"] .launch-action-btn.purple .launch-icon { background: rgba(139, 92, 246, 0.2); }
+[data-theme="dark"] .launch-action-btn.navy   .launch-icon { background: rgba(30, 41, 59, 0.6);   }
+
+/* ================================================================ */
+/* STICKY TABS                                                      */
+/* ================================================================ */
+[data-theme="dark"] .modern-tabs-sticky {
+    background: #0f172a;
+    border-color: #334155;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .nav-segmented .nav-link {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .nav-segmented .nav-link:not(.active):hover {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+/* Active tab stays the gradient — no override needed */
+
+/* ================================================================ */
+/* PIPELINE TILES                                                   */
+/* ================================================================ */
+[data-theme="dark"] .pipeline-tile {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .pipeline-tile:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .p-icon {
+    background: #334155;
+    color: #cbd5e1;
+}
+
+[data-theme="dark"] .p-count     { color: #f1f5f9; }
+[data-theme="dark"] .p-label     { color: #e2e8f0; }
+[data-theme="dark"] .pipeline-desc { color: #94a3b8 !important; }
+
+/* Pipeline "View Details" buttons — light variants */
+[data-theme="dark"] .btn-blue-light {
+    background: rgba(37, 99, 235, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba(37, 99, 235, 0.3);
+}
+[data-theme="dark"] .btn-blue-light:hover { background: rgba(37, 99, 235, 0.25); }
+
+[data-theme="dark"] .btn-indigo-light {
+    background: rgba(79, 70, 229, 0.15);
+    color: #a5b4fc;
+    border: 1px solid rgba(79, 70, 229, 0.3);
+}
+[data-theme="dark"] .btn-indigo-light:hover { background: rgba(79, 70, 229, 0.25); }
+
+[data-theme="dark"] .btn-cyan-light {
+    background: rgba(8, 145, 178, 0.15);
+    color: #67e8f9;
+    border: 1px solid rgba(8, 145, 178, 0.3);
+}
+[data-theme="dark"] .btn-cyan-light:hover { background: rgba(8, 145, 178, 0.25); }
+
+[data-theme="dark"] .btn-green-light {
+    background: rgba(16, 185, 129, 0.15);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+[data-theme="dark"] .btn-green-light:hover { background: rgba(16, 185, 129, 0.25); }
+
+[data-theme="dark"] .btn-red-light {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+[data-theme="dark"] .btn-red-light:hover { background: rgba(239, 68, 68, 0.25); }
+
+/* ================================================================ */
+/* UNCLAIMED ROWS                                                   */
+/* ================================================================ */
+[data-theme="dark"] .unclaimed-row {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .unclaimed-row:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .unclaimed-row h6 { color: #e2e8f0; }
+
+/* ================================================================ */
+/* RECENT LAUNDRIES                                                 */
+/* ================================================================ */
+[data-theme="dark"] .recent-laundry-item {
+    background: #253348;
+    border-left-color: #2563eb;
+}
+
+[data-theme="dark"] .recent-laundry-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .recent-laundry-item h6 { color: #e2e8f0; }
+
+/* ================================================================ */
+/* TOP CUSTOMERS                                                    */
+/* ================================================================ */
+[data-theme="dark"] .top-customer-item {
+    background: #253348;
+}
+
+[data-theme="dark"] .top-customer-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .top-customer-item h6 { color: #e2e8f0; }
+
+/* Customer avatar — gradient stays, just fine */
+
+/* ================================================================ */
+/* METRIC TILES (System Performance section)                        */
+/* ================================================================ */
+[data-theme="dark"] .metric-tile {
+    background: #1e293b;
+}
+
+[data-theme="dark"] .metric-tile:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .metric-tile h4  { color: #f1f5f9; }
+[data-theme="dark"] .metric-tile small { color: #94a3b8; }
+
+/* m-icon backgrounds */
+[data-theme="dark"] .m-icon.icon-blue   { background: rgba(37, 99, 235, 0.18); }
+[data-theme="dark"] .m-icon.icon-green  { background: rgba(16, 185, 129, 0.15); }
+[data-theme="dark"] .m-icon.icon-indigo { background: rgba(79, 70, 229, 0.18); }
+[data-theme="dark"] .m-icon.icon-cyan   { background: rgba(8, 145, 178, 0.18); }
+
+/* ================================================================ */
+/* TABLE — table-modern                                             */
+/* ================================================================ */
+[data-theme="dark"] .table-modern {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+/* Keep the gradient header — it reads well on dark */
+
+[data-theme="dark"] .table-modern td {
+    color: #e2e8f0;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .table-modern tbody tr:hover {
+    background: #253348;
+}
+
+[data-theme="dark"] .service-icon {
+    background: #334155;
+    color: #cbd5e1;
+}
+
+/* ================================================================ */
+/* PICKUP STATUS SUMMARY (Operations tab)                           */
+/* ================================================================ */
+[data-theme="dark"] .border-bottom {
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .card.shadow-lg {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .card.shadow-lg .card-body {
+    background: #1e293b;
+}
+
+[data-theme="dark"] .card.shadow-lg h6 { color: #e2e8f0; }
+
+[data-theme="dark"] #map-address-search {
+    background: #253348;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] #map-address-search::placeholder {
+    color: #64748b;
+}
+
+/* ================================================================ */
+/* ROUTE DETAILS / ETA DISPLAY                                      */
+/* ================================================================ */
+[data-theme="dark"] .route-details-panel {
+    background: #1e293b;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .eta-display {
+    background: #1e293b;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .eta-time    { color: #f1f5f9; }
+[data-theme="dark"] .eta-label   { color: #94a3b8; }
+
+[data-theme="dark"] .route-controls {
+    background: #1e293b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ================================================================ */
+/* SEARCH RESULT DISPLAY                                            */
+/* ================================================================ */
+[data-theme="dark"] #search-result-display .alert-success {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: rgba(16, 185, 129, 0.3) !important;
+    color: #6ee7b7 !important;
+}
+
+[data-theme="dark"] #search-result-display strong { color: #6ee7b7; }
+[data-theme="dark"] #search-result-display .text-muted { color: #94a3b8 !important; }
+
+/* ================================================================ */
+/* MODAL (Logistics fullscreen map modal)                           */
+/* ================================================================ */
+[data-theme="dark"] .modal-content {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+/* The .bg-navy header stays dark already — no override needed */
+
+/* ================================================================ */
+/* CHART.JS CANVASES                                                */
+/* The charts themselves need JS-side color updates — see note      */
+/* below. These CSS rules handle surrounding elements.              */
+/* ================================================================ */
+[data-theme="dark"] .chart-container {
+    background: transparent;
+}
+
+/* ================================================================ */
+/* MISC OVERRIDES — inline utility classes used in blade            */
+/* ================================================================ */
+
+/* text-primary-blue inline references */
+[data-theme="dark"] .text-primary-blue {
+    color: #60a5fa !important;
+}
+
+/* Headings using text-slate-800 directly */
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+    color: #e2e8f0;
+}
+
+/* Small / muted text */
+[data-theme="dark"] small.text-muted,
+[data-theme="dark"] p.text-muted,
+[data-theme="dark"] .text-muted {
+    color: #94a3b8 !important;
+}
+
+/* General paragraph text */
+[data-theme="dark"] .dashboard-modern-wrapper p { color: #cbd5e1; }
+
+/* Dividers */
+[data-theme="dark"] .dashboard-modern-wrapper hr {
+    border-color: #334155;
+    opacity: 0.6;
+}
+
+/* Bootstrap .bg-light overrides inside dashboard */
+[data-theme="dark"] .dashboard-modern-wrapper .bg-light {
+    background: #1e293b !important;
+}
+
+/* Selected pickup row (operations tab) */
+[data-theme="dark"] .selected-pickup {
+    background-color: rgba(139, 92, 246, 0.15) !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Empty state icons */
+[data-theme="dark"] .text-muted.fs-1 { color: #475569 !important; }
+
+/* ================================================================ */
+/* SERVICE CHARTS — Laundries Tab                                    */
+/* ================================================================ */
+
+/* ── Summary strips (top row) ── */
+.svc-summary-strip {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    border: 1px solid var(--svc-border, var(--slate-100));
+    border-radius: 16px;
+    padding: 1.1rem 1.25rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.svc-summary-strip:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+    border-color: var(--svc-hex, var(--primary-blue));
+}
+
+.svc-strip-icon-wrap {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+.svc-strip-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--slate-500);
+    margin-bottom: 2px;
+}
+
+.svc-strip-count {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--slate-800);
+    line-height: 1.2;
+}
+
+.svc-strip-pct {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.svc-strip-pct-label {
+    font-size: 0.65rem;
+    color: var(--slate-400);
+    white-space: nowrap;
+}
+
+/* ── Chart card header icon ── */
+.svc-chart-header-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+}
+
+.svc-chart-total-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+/* ── Donut chart wrapper with centred label ── */
+.svc-donut-wrap {
+    position: relative;
+    height: 280px;
+    width: 100%;
+}
+
+.svc-donut-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -64%);   /* slightly above centre — legend sits below */
+    text-align: center;
+    pointer-events: none;
+}
+
+.svc-donut-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--slate-800);
+    line-height: 1;
+}
+
+.svc-donut-lbl {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--slate-500);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-top: 2px;
+}
+
+/* ── Empty state ── */
+.svc-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    color: var(--slate-400);
+    font-size: 2rem;
+}
+
+.svc-empty-state p {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--slate-400);
+    margin: 0.5rem 0 0;
+}
+
+/* ── Service table ── */
+.svc-table {
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.svc-table thead th {
+    background: linear-gradient(135deg, var(--primary-blue), var(--indigo));
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.85rem 1rem;
+    border: none;
+    white-space: nowrap;
+}
+
+.svc-table thead th:first-child { border-radius: 0; }
+
+.svc-table tbody td {
+    padding: 0.85rem 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--slate-100);
+    font-size: 0.875rem;
+}
+
+.svc-table-row {
+    transition: background 0.15s ease;
+}
+
+.svc-table-row:hover {
+    background: var(--slate-50);
+}
+
+.svc-table-row:last-child td {
+    border-bottom: none;
+}
+
+.svc-rank-cell {
+    color: var(--slate-400);
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.svc-icon-sm {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.svc-name-text {
+    font-weight: 600;
+    color: var(--slate-800);
+}
+
+.svc-type-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.svc-type-pill i { font-size: 0.65rem; }
+
+.svc-sub-pct {
+    font-size: 0.65rem;
+    color: var(--slate-400);
+    font-weight: 600;
+    margin-top: 1px;
+}
+
+/* Thin progress bar inside table */
+.svc-bar-track {
+    height: 6px;
+    border-radius: 99px;
+    background: var(--slate-100);
+    overflow: hidden;
+}
+
+.svc-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.svc-row-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    color: var(--slate-400);
+    font-size: 1rem;
+    transition: all 0.15s ease;
+    text-decoration: none;
+}
+
+.svc-row-link:hover {
+    background: var(--primary-blue);
+    color: white;
+}
+
+/* ================================================================ */
+/* SERVICE CHARTS — DARK MODE                                        */
+/* ================================================================ */
+
+[data-theme="dark"] .svc-summary-strip {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .svc-summary-strip:hover {
+    box-shadow: 0 8px 22px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .svc-strip-count { color: #f1f5f9; }
+[data-theme="dark"] .svc-strip-label { color: #94a3b8; }
+[data-theme="dark"] .svc-strip-pct-label { color: #475569; }
+
+[data-theme="dark"] .svc-donut-num { color: #f1f5f9; }
+[data-theme="dark"] .svc-donut-lbl { color: #94a3b8; }
+
+[data-theme="dark"] .svc-empty-state,
+[data-theme="dark"] .svc-empty-state p { color: #475569; }
+
+[data-theme="dark"] .svc-table thead th {
+    /* gradient header stays the same */
+}
+
+[data-theme="dark"] .svc-table tbody td {
+    color: #e2e8f0;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .svc-table-row:hover { background: #253348; }
+
+[data-theme="dark"] .svc-rank-cell { color: #64748b; }
+[data-theme="dark"] .svc-name-text { color: #e2e8f0; }
+[data-theme="dark"] .svc-sub-pct   { color: #64748b; }
+
+[data-theme="dark"] .svc-bar-track { background: #334155; }
+
+[data-theme="dark"] .svc-row-link {
+    color: #64748b;
+}
+
+[data-theme="dark"] .svc-row-link:hover {
+    background: var(--primary-blue);
+    color: white;
+}
+
+@media (max-width: 576px) {
+    .svc-donut-wrap { height: 240px; }
+    .svc-donut-num  { font-size: 1.3rem; }
+}
+
+/* ================================================================ */
+/* BPB — Pipeline by Branch + Customer Breakdown                    */
+/* ================================================================ */
+
+.bpb-wrapper {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.bpb-main-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #4338ca 50%, #1e3a8a 100%);
+    background-size: 200% 200%;
+    animation: bpbHeaderShift 8s ease infinite;
+    padding: 1.5rem 1.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.bpb-main-header::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -10%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    pointer-events: none;
+}
+
+.bpb-main-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60%; left: 10%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+    pointer-events: none;
+}
+
+@keyframes bpbHeaderShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.bpb-header-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem; color: white; flex-shrink: 0;
+}
+
+.bpb-legend {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px;
+    padding: 6px 14px;
+}
+
+.bpb-legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    white-space: nowrap;
+}
+
+.bpb-legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%; flex-shrink: 0;
+}
+
+/* ── Branch card ── */
+.bpb-card {
+    background: white;
+    border-radius: 18px;
+    border: 1px solid var(--slate-100);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.bpb-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    border-color: var(--bpb-accent, #3b82f6);
+}
+
+.bpb-accent-bar {
+    height: 4px; width: 100%;
+    background: var(--bpb-accent, #3b82f6);
+}
+
+.bpb-card-header {
+    padding: 1.1rem 1.25rem 0.9rem;
+    border-bottom: 1px solid var(--slate-100);
+}
+
+.bpb-branch-name {
+    font-size: 0.95rem; color: var(--slate-800);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.bpb-avatar {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    color: white; font-weight: 800; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.bpb-total-badge {
+    display: inline-flex; align-items: center;
+    background: var(--slate-100); color: var(--slate-600);
+    font-size: 0.7rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 50px;
+}
+
+.bpb-view-link {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--slate-100); color: var(--slate-500);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.bpb-view-link:hover {
+    background: var(--bpb-accent, #3b82f6);
+    color: white;
+}
+
+/* ── Stacked bar ── */
+.bpb-stacked-bar-wrap { padding: 0.75rem 1.25rem; }
+
+.bpb-stacked-bar {
+    height: 8px; border-radius: 99px;
+    overflow: hidden; display: flex;
+    background: var(--slate-100);
+}
+
+.bpb-bar-seg { transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.bpb-bar-seg:first-child { border-radius: 99px 0 0 99px; }
+.bpb-bar-seg:last-child  { border-radius: 0 99px 99px 0; }
+.bpb-bar-seg:only-child  { border-radius: 99px; }
+
+/* ── Status 5-tile grid ── */
+.bpb-status-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--slate-100);
+}
+
+.bpb-status-tile {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 0.8rem 0.4rem;
+    text-decoration: none;
+    border-right: 1px solid var(--slate-100);
+    transition: all 0.2s ease;
+    position: relative; overflow: hidden;
+}
+
+.bpb-status-tile:last-child { border-right: none; }
+
+.bpb-status-tile::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--tile-color);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+}
+
+.bpb-status-tile:hover { background: rgba(0,0,0,0.02); }
+.bpb-status-tile:hover::before { transform: scaleX(1); }
+
+.bpb-tile-icon {
+    font-size: 1rem; color: var(--tile-color);
+    margin-bottom: 3px; line-height: 1;
+}
+
+.bpb-tile-count {
+    font-size: 1.15rem; font-weight: 800;
+    color: var(--slate-800); line-height: 1.1;
+}
+
+.bpb-tile-label {
+    font-size: 0.62rem; font-weight: 600;
+    color: var(--slate-500);
+    text-transform: uppercase; letter-spacing: 0.4px;
+    line-height: 1.2; text-align: center;
+}
+
+.bpb-tile-pct {
+    font-size: 0.6rem; font-weight: 700;
+    color: var(--tile-color);
+    margin-top: 2px; opacity: 0.8;
+}
+
+/* ── Divider + customer section ── */
+.bpb-divider {
+    height: 1px;
+    background: var(--slate-100);
+    margin: 0 1.25rem;
+}
+
+.bpb-customer-section {
+    padding: 0.85rem 1.25rem 1.1rem;
+}
+
+.bpb-section-label {
+    font-size: 0.72rem; font-weight: 700;
+    color: var(--slate-500);
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.bpb-customer-bar {
+    height: 6px; border-radius: 99px;
+    overflow: hidden; display: flex;
+    background: var(--slate-100);
+    margin: 6px 0;
+}
+
+.bpb-customer-seg { transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+
+.bpb-walkin-seg {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    border-radius: 99px 0 0 99px;
+}
+
+.bpb-app-seg {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+    border-radius: 0 99px 99px 0;
+}
+
+.bpb-source-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 50px;
+    font-size: 0.75rem; font-weight: 600;
+}
+
+.bpb-walkin-chip {
+    background: #eff6ff; color: #2563eb;
+    border: 1px solid #bfdbfe;
+}
+
+.bpb-app-chip {
+    background: #faf5ff; color: #7c3aed;
+    border: 1px solid #ddd6fe;
+}
+
+.bpb-chip-pct {
+    font-size: 0.65rem; opacity: 0.7; font-weight: 700;
+}
+
+.bpb-empty-icon {
+    width: 64px; height: 64px;
+    border-radius: 18px;
+    background: var(--slate-100);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.75rem; color: var(--slate-400);
+    margin: 0 auto;
+}
+
+/* ================================================================ */
+/* BPB — DARK MODE                                                  */
+/* ================================================================ */
+
+[data-theme="dark"] .bpb-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .bpb-card:hover {
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .bpb-card-header { border-color: #334155; }
+[data-theme="dark"] .bpb-branch-name { color: #f1f5f9; }
+
+[data-theme="dark"] .bpb-total-badge {
+    background: #334155; color: #94a3b8;
+}
+
+[data-theme="dark"] .bpb-view-link {
+    background: #334155; color: #94a3b8;
+}
+
+[data-theme="dark"] .bpb-stacked-bar,
+[data-theme="dark"] .bpb-customer-bar { background: #334155; }
+
+[data-theme="dark"] .bpb-status-grid { border-color: #334155; }
+[data-theme="dark"] .bpb-status-tile { border-color: #334155; }
+[data-theme="dark"] .bpb-status-tile:hover { background: rgba(255,255,255,0.04); }
+
+[data-theme="dark"] .bpb-tile-count { color: #f1f5f9; }
+[data-theme="dark"] .bpb-tile-label { color: #94a3b8; }
+[data-theme="dark"] .bpb-divider    { background: #334155; }
+[data-theme="dark"] .bpb-section-label { color: #64748b; }
+
+[data-theme="dark"] .bpb-walkin-chip {
+    background: rgba(59,130,246,0.15);
+    color: #93c5fd;
+    border-color: rgba(59,130,246,0.3);
+}
+
+[data-theme="dark"] .bpb-app-chip {
+    background: rgba(139,92,246,0.15);
+    color: #c4b5fd;
+    border-color: rgba(139,92,246,0.3);
+}
+
+[data-theme="dark"] .bpb-empty-icon {
+    background: #334155; color: #475569;
+}
+
+@media (max-width: 768px) {
+    .bpb-tile-label  { font-size: 0.55rem; }
+    .bpb-legend      { display: none !important; }
+    .bpb-main-header { padding: 1.1rem 1.25rem; }
+}
+
+/* ================================================================ */
+/* PBP — Pickup Pipeline by Branch (Operations Tab)                 */
+/* ================================================================ */
+
+/* Outer card */
+.pbp-wrapper { border-radius: 20px; overflow: hidden; }
+
+/* ── Gradient header ── */
+.pbp-main-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    background-size: 200% 200%;
+    animation: pbpHeaderShift 10s ease infinite;
+    padding: 1.4rem 1.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.pbp-main-header::before {
+    content: '';
+    position: absolute; top: -40%; right: -8%;
+    width: 260px; height: 260px; border-radius: 50%;
+    background: rgba(255,255,255,0.04); pointer-events: none;
+}
+
+@keyframes pbpHeaderShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.pbp-header-icon {
+    width: 46px; height: 46px; border-radius: 13px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; color: white; flex-shrink: 0;
+}
+
+.pbp-legend {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px;
+    padding: 5px 14px;
+}
+
+.pbp-legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.7rem; font-weight: 600;
+    color: rgba(255,255,255,0.9); white-space: nowrap;
+}
+
+.pbp-legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%; flex-shrink: 0;
+}
+
+/* ── Branch card ── */
+.pbp-card {
+    background: white;
+    border-radius: 18px;
+    border: 1px solid var(--slate-100);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.pbp-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.11);
+    border-color: var(--pbp-accent, #f59e0b);
+}
+
+.pbp-accent-bar {
+    height: 4px; width: 100%;
+    background: var(--pbp-accent, #f59e0b);
+}
+
+.pbp-card-header {
+    padding: 1rem 1.2rem 0.9rem;
+    border-bottom: 1px solid var(--slate-100);
+}
+
+.pbp-branch-name {
+    font-size: 0.93rem; color: var(--slate-800);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.pbp-avatar {
+    width: 38px; height: 38px; border-radius: 10px;
+    color: white; font-weight: 800; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; box-shadow: 0 3px 9px rgba(0,0,0,0.15);
+}
+
+.pbp-total-badge {
+    display: inline-flex; align-items: center;
+    background: var(--slate-100); color: var(--slate-600);
+    font-size: 0.68rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 50px;
+}
+
+.pbp-active-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(16,185,129,0.1); color: #059669;
+    border: 1px solid rgba(16,185,129,0.25);
+    font-size: 0.68rem; font-weight: 700;
+    padding: 2px 8px; border-radius: 50px;
+}
+
+.pbp-pulse-dot {
+    display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #10b981;
+    animation: pulse 2s infinite;
+}
+
+.pbp-view-link {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--slate-100); color: var(--slate-400);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.pbp-view-link:hover {
+    background: var(--pbp-accent, #f59e0b);
+    color: white;
+}
+
+/* ── Stacked bar ── */
+.pbp-bar-wrap { padding: 0.7rem 1.2rem; }
+
+.pbp-stacked-bar {
+    height: 8px; border-radius: 99px;
+    overflow: hidden; display: flex;
+    background: var(--slate-100);
+}
+
+.pbp-bar-seg { transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.pbp-bar-seg:first-child { border-radius: 99px 0 0 99px; }
+.pbp-bar-seg:last-child  { border-radius: 0 99px 99px 0; }
+.pbp-bar-seg:only-child  { border-radius: 99px; }
+
+/* ── 5-tile status grid ── */
+.pbp-status-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: 1px solid var(--slate-100);
+}
+
+.pbp-status-tile {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 0.75rem 0.3rem;
+    border-right: 1px solid var(--slate-100);
+    text-decoration: none;
+    transition: background 0.15s ease;
+    position: relative; overflow: hidden;
+}
+
+.pbp-status-tile:last-child { border-right: none; }
+
+.pbp-status-tile::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--tile-color);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+}
+
+.pbp-status-tile:hover { background: rgba(0,0,0,0.025); }
+.pbp-status-tile:hover::after { transform: scaleX(1); }
+
+.pbp-tile-icon {
+    font-size: 0.95rem; color: var(--tile-color);
+    margin-bottom: 3px; line-height: 1;
+}
+
+.pbp-tile-count {
+    font-size: 1.1rem; font-weight: 800;
+    color: var(--slate-800); line-height: 1.1;
+}
+
+.pbp-tile-label {
+    font-size: 0.58rem; font-weight: 600;
+    color: var(--slate-500);
+    text-transform: uppercase; letter-spacing: 0.3px;
+    text-align: center; line-height: 1.2;
+}
+
+.pbp-tile-pct {
+    font-size: 0.58rem; font-weight: 700;
+    color: var(--tile-color); opacity: 0.8; margin-top: 2px;
+}
+
+/* Empty state */
+.pbp-empty-icon {
+    width: 60px; height: 60px; border-radius: 16px;
+    background: var(--slate-100);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; color: var(--slate-400);
+    margin: 0 auto;
+}
+
+/* ================================================================ */
+/* PBP — DARK MODE                                                  */
+/* ================================================================ */
+[data-theme="dark"] .pbp-card {
+    background: #1e293b; border-color: #334155;
+}
+[data-theme="dark"] .pbp-card:hover {
+    box-shadow: 0 14px 36px rgba(0,0,0,0.4);
+}
+[data-theme="dark"] .pbp-card-header { border-color: #334155; }
+[data-theme="dark"] .pbp-branch-name { color: #f1f5f9; }
+[data-theme="dark"] .pbp-total-badge { background: #334155; color: #94a3b8; }
+[data-theme="dark"] .pbp-active-badge {
+    background: rgba(16,185,129,0.15);
+    border-color: rgba(16,185,129,0.3);
+    color: #6ee7b7;
+}
+[data-theme="dark"] .pbp-view-link { background: #334155; color: #94a3b8; }
+[data-theme="dark"] .pbp-stacked-bar { background: #334155; }
+[data-theme="dark"] .pbp-status-grid { border-color: #334155; }
+[data-theme="dark"] .pbp-status-tile { border-color: #334155; }
+[data-theme="dark"] .pbp-status-tile:hover { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .pbp-tile-count { color: #f1f5f9; }
+[data-theme="dark"] .pbp-tile-label { color: #94a3b8; }
+[data-theme="dark"] .pbp-empty-icon { background: #334155; color: #475569; }
+
+@media (max-width: 768px) {
+    .pbp-legend      { display: none !important; }
+    .pbp-main-header { padding: 1rem 1.2rem; }
+    .pbp-tile-label  { font-size: 0.52rem; }
+}
+
+/* ================================================================ */
+/* CBP — Customer Pipeline by Branch (Customers Tab)                */
+/* ================================================================ */
+
+.cbp-wrapper { border-radius: 20px; overflow: hidden; }
+
+/* ── Gradient header (teal/emerald) ── */
+.cbp-main-header {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #064e3b 100%);
+    background-size: 200% 200%;
+    animation: cbpHeaderShift 10s ease infinite;
+    padding: 1.4rem 1.75rem;
+    position: relative; overflow: hidden;
+}
+.cbp-main-header::before {
+    content: '';
+    position: absolute; top: -40%; right: -8%;
+    width: 260px; height: 260px; border-radius: 50%;
+    background: rgba(255,255,255,0.04); pointer-events: none;
+}
+@keyframes cbpHeaderShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.cbp-header-icon {
+    width: 46px; height: 46px; border-radius: 13px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; color: white; flex-shrink: 0;
+}
+
+.cbp-legend {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px; padding: 5px 14px;
+}
+.cbp-legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.7rem; font-weight: 600;
+    color: rgba(255,255,255,0.9); white-space: nowrap;
+}
+.cbp-legend-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+
+/* ── Branch cards ── */
+.cbp-card {
+    background: white; border-radius: 18px;
+    border: 1px solid var(--slate-100); overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.cbp-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.11);
+    border-color: var(--cbp-accent, #10b981);
+}
+.cbp-accent-bar {
+    height: 4px; width: 100%;
+    background: var(--cbp-accent, #10b981);
+}
+.cbp-card-header {
+    padding: 1rem 1.2rem 0.9rem;
+    border-bottom: 1px solid var(--slate-100);
+}
+.cbp-branch-name {
+    font-size: 0.93rem; color: var(--slate-800);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cbp-avatar {
+    width: 38px; height: 38px; border-radius: 10px;
+    color: white; font-weight: 800; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; box-shadow: 0 3px 9px rgba(0,0,0,0.15);
+}
+.cbp-total-badge {
+    display: inline-flex; align-items: center;
+    background: var(--slate-100); color: var(--slate-600);
+    font-size: 0.68rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 50px;
+}
+.cbp-view-link {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--slate-100); color: var(--slate-400);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; text-decoration: none; transition: all 0.2s ease;
+}
+.cbp-view-link:hover {
+    background: var(--cbp-accent, #10b981); color: white;
+}
+
+/* ── Stacked bar ── */
+.cbp-bar-wrap { padding: 0.7rem 1.2rem; }
+.cbp-stacked-bar {
+    height: 8px; border-radius: 99px;
+    overflow: hidden; display: flex; background: var(--slate-100);
+}
+.cbp-bar-seg { transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.cbp-bar-seg:first-child { border-radius: 99px 0 0 99px; }
+.cbp-bar-seg:last-child  { border-radius: 0 99px 99px 0; }
+.cbp-bar-seg:only-child  { border-radius: 99px; }
+
+/* ── 2-tile status grid ── */
+.cbp-status-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--slate-100);
+}
+.cbp-status-tile {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 0.85rem 0.3rem;
+    border-right: 1px solid var(--slate-100);
+    text-decoration: none; transition: background 0.15s ease;
+    position: relative; overflow: hidden;
+}
+.cbp-status-tile:last-child { border-right: none; }
+.cbp-status-tile::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--tile-color);
+    transform: scaleX(0); transition: transform 0.2s ease;
+}
+.cbp-status-tile:hover { background: rgba(0,0,0,0.025); }
+.cbp-status-tile:hover::after { transform: scaleX(1); }
+.cbp-tile-icon { font-size: 1rem; color: var(--tile-color); margin-bottom: 3px; }
+.cbp-tile-count { font-size: 1.15rem; font-weight: 800; color: var(--slate-800); line-height: 1.1; }
+.cbp-tile-label { font-size: 0.62rem; font-weight: 600; color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.3px; }
+.cbp-tile-pct   { font-size: 0.6rem; font-weight: 700; color: var(--tile-color); opacity: 0.85; margin-top: 2px; }
+
+/* ── Overall pie chart card ── */
+.cbp-chart-card {
+    background: white; border-radius: 18px;
+    border: 1px solid var(--slate-100);
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: flex; flex-direction: column; gap: 1rem;
+}
+.cbp-chart-header {
+    display: flex; align-items: center; gap: 12px;
+}
+.cbp-chart-icon {
+    width: 40px; height: 40px; border-radius: 11px;
+    background: linear-gradient(135deg, #064e3b, #10b981);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; color: white; flex-shrink: 0;
+}
+.cbp-donut-wrap {
+    position: relative; height: 220px; flex-grow: 1;
+}
+.cbp-donut-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center; pointer-events: none;
+}
+.cbp-donut-num  { font-size: 1.7rem; font-weight: 800; color: var(--slate-800); line-height: 1; }
+.cbp-donut-lbl  { font-size: 0.65rem; font-weight: 600; color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
+
+.cbp-chart-legend { display: flex; flex-direction: column; gap: 8px; }
+.cbp-chart-legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem;
+}
+.cbp-chart-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.cbp-chart-legend-label { flex-grow: 1; color: var(--slate-600); font-weight: 500; }
+.cbp-chart-legend-val { font-weight: 700; color: var(--slate-800); }
+
+/* Empty state */
+.cbp-empty-icon {
+    width: 60px; height: 60px; border-radius: 16px;
+    background: var(--slate-100);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; color: var(--slate-400); margin: 0 auto;
+}
+
+/* ── Dark mode ── */
+[data-theme="dark"] .cbp-card         { background: #1e293b; border-color: #334155; }
+[data-theme="dark"] .cbp-card:hover   { box-shadow: 0 14px 36px rgba(0,0,0,0.4); }
+[data-theme="dark"] .cbp-card-header  { border-color: #334155; }
+[data-theme="dark"] .cbp-branch-name  { color: #f1f5f9; }
+[data-theme="dark"] .cbp-total-badge  { background: #334155; color: #94a3b8; }
+[data-theme="dark"] .cbp-view-link    { background: #334155; color: #94a3b8; }
+[data-theme="dark"] .cbp-stacked-bar  { background: #334155; }
+[data-theme="dark"] .cbp-status-grid  { border-color: #334155; }
+[data-theme="dark"] .cbp-status-tile  { border-color: #334155; }
+[data-theme="dark"] .cbp-status-tile:hover { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .cbp-tile-count   { color: #f1f5f9; }
+[data-theme="dark"] .cbp-tile-label   { color: #94a3b8; }
+[data-theme="dark"] .cbp-chart-card   { background: #1e293b; border-color: #334155; }
+[data-theme="dark"] .cbp-donut-num    { color: #f1f5f9; }
+[data-theme="dark"] .cbp-donut-lbl    { color: #94a3b8; }
+[data-theme="dark"] .cbp-chart-legend-label { color: #94a3b8; }
+[data-theme="dark"] .cbp-chart-legend-val   { color: #f1f5f9; }
+[data-theme="dark"] .cbp-empty-icon   { background: #334155; color: #475569; }
+
+@media (max-width: 768px) {
+    .cbp-legend     { display: none !important; }
+    .cbp-main-header { padding: 1rem 1.2rem; }
+    .cbp-donut-wrap { height: 180px; }
+}
+
+/* ================================================================ */
+/* TRC — Top Rated Customers Card                                    */
+/* ================================================================ */
+
+.top-rated-item {
+    padding: 10px 12px;
+    border-radius: 14px;
+    transition: all 0.25s ease;
+}
+
+.trc-rank {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--slate-100); color: var(--slate-500);
+    font-size: 0.7rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
+.trc-star-bar {
+    height: 5px; border-radius: 99px;
+    background: var(--slate-100); overflow: hidden;
+}
+
+.trc-star-fill {
+    height: 100%; border-radius: 99px;
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trc-score {
+    font-size: 1rem; font-weight: 800; line-height: 1;
+    display: flex; align-items: center; justify-content: flex-end;
+}
+
+.trc-stars {
+    display: flex; gap: 2px; justify-content: flex-end;
+    margin-top: 3px; font-size: 0.6rem;
+}
+
+/* ── Dark mode ── */
+[data-theme="dark"] .top-rated-item  { background: #253348; }
+[data-theme="dark"] .trc-rank        { background: #334155; color: #94a3b8; }
+[data-theme="dark"] .trc-star-bar    { background: #334155; }
+[data-theme="dark"] .trc-stars i     { color: #475569; }

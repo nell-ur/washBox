@@ -66,6 +66,11 @@ Route::middleware('guest')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/forgot-password', [AdminLoginController::class, 'sendResetLinkEmail'])->name('forgot-password.email');
 });
 
+// Add this line BEFORE the existing analytics route
+Route::get('analytics/refresh', [AnalyticsController::class, 'refresh'])->name('admin.analytics.refresh');
+
+// Your existing route (already there)
+Route::get('analytics', [AnalyticsController::class, 'index'])->name('admin.analytics');
 // ============================================================================
 // ADMIN AUTHENTICATED ROUTES
 // ============================================================================
@@ -154,20 +159,20 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->name('admin.')->g
     Route::patch('/branches/{branch}/deactivate', [BranchController::class, 'deactivate'])->name('branches.deactivate');
     Route::patch('/branches/{branch}/activate', [BranchController::class, 'activate'])->name('branches.activate');
 
-    
+
 // ========================================================================
 // SERVICE TYPES ROUTES - ADD THESE NEW ROUTES
 // ========================================================================
 Route::resource('service-types', ServiceTypeController::class);
 Route::post('service-types/{serviceType}/toggle-status', [ServiceTypeController::class, 'toggleStatus'])->name('service-types.toggle-status');
 Route::get('service-types/by-category/{category}', [ServiceTypeController::class, 'getByCategory'])->name('service-types.by-category');
-    
+
     // ========================================================================
     // SERVICES & ADD-ONS
     // ========================================================================
     Route::resource('services', ServiceController::class);
     Route::post('services/{service}/toggle-status', [ServiceController::class, 'toggleStatus'])->name('services.toggle-status');
-    
+
     Route::resource('addons', AddOnController::class);
     Route::post('addons/{addon}/toggle-status', [AddOnController::class, 'toggleStatus'])->name('addons.toggle-status');
 
@@ -244,14 +249,14 @@ Route::get('service-types/by-category/{category}', [ServiceTypeController::class
         Route::get('/stats/data', [PickupRequestController::class, 'stats'])->name('stats');
     });
 
-     
+
     // ========================================================================
     // RATINGS
     // ========================================================================
     Route::prefix('ratings')->name('ratings.')->group(function () {
         Route::get('/', [RatingController::class, 'index'])->name('index');
-        Route::get('/branches', [AdminBranchRatingController::class, 'index'])->name('branches');
-        Route::get('/branches/{branch}', [AdminBranchRatingController::class, 'show'])->name('branches.show');
+        Route::get('/branches', [BranchRatingController::class, 'index'])->name('branches');
+        Route::get('/branches/{branch}', [BranchRatingController::class, 'show'])->name('branches.show');
         Route::delete('/{rating}', [RatingController::class, 'destroy'])->name('destroy');
     });
 // ========================================================================

@@ -166,7 +166,7 @@
 
         {{-- Analytics --}}
         <li class="nav-item">
-   
+
         {{-- Branches (View Only) --}}
         <li class="nav-item">
             <a href="{{ route('staff.branches.index') }}"

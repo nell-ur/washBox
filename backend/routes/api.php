@@ -9,10 +9,10 @@ use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\NotificationController;
-use App\Http\Controllers\Api\AdminNotificationController;
-use App\Http\Controllers\Api\StaffNotificationController;
 use App\Http\Controllers\Api\CustomerRatingController;
-use App\Http\Controllers\Api\BranchRatingController; // FIXED: Changed from Admin to Api
+use App\Http\Controllers\Admin\BranchRatingController as AdminBranchRatingController;
+use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
+use App\Http\Controllers\Staff\NotificationController as StaffNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,11 +92,11 @@ Route::prefix('v1')->group(function () {
             Route::delete('/ratings/{id}', [CustomerRatingController::class, 'destroy']);
             Route::get('/unrated-laundries', [CustomerRatingController::class, 'unratedLaundries']);
 
-            // BRANCH RATINGS - Using correct API controller
-            Route::get('/branches', [BranchRatingController::class, 'branches']);
-            Route::get('/branch-ratings', [BranchRatingController::class, 'index']);
-            Route::post('/branch-ratings', [BranchRatingController::class, 'store']);
-            Route::get('/branch-ratings/stats', [BranchRatingController::class, 'stats']);
+            // Branch Ratings
+            Route::get('/branches', [AdminBranchRatingController::class, 'index']);
+            Route::get('/branch-ratings', [AdminBranchRatingController::class, 'index']);
+            Route::post('/branch-ratings', [AdminBranchRatingController::class, 'store']);
+            Route::get('/branch-ratings/stats', [AdminBranchRatingController::class, 'index']);
         });
 
         // Laundries

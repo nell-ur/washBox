@@ -106,6 +106,22 @@ class Branch extends Model
         return $this->hasMany(Promotion::class);
     }
 
+    /**
+     * Get all customer ratings for this branch.
+     */
+    public function ratings()
+    {
+        return $this->hasMany(CustomerRating::class);
+    }
+
+    /**
+     * Get the average rating for this branch.
+     */
+    public function getAverageRating()
+    {
+        return round($this->ratings()->avg('rating') ?? 0, 1);
+    }
+
     // ========================================================================
     // SCOPES
     // ========================================================================
@@ -413,14 +429,4 @@ class Branch extends Model
     {
         return !is_null($this->latitude) && !is_null($this->longitude);
     }
-
-    public function ratings()
-{
-    return $this->hasMany(CustomerRating::class);
-}
-
-public function getAverageRating()
-{
-    return round($this->ratings()->avg('rating') ?? 0, 1);
-}
 }

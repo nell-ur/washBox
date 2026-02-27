@@ -7,6 +7,10 @@ const DASHBOARD_CONFIG = {
     charts: {
         revenue: null,
         customerSource: null,
+        customerBranch: null,
+        fullService: null,
+        selfService: null,
+        addonService: null,
     },
     cacheKey: "dashboard_active_tab",
 };
@@ -146,6 +150,11 @@ function initializeTabs() {
                         logisticsMapInstance.invalidateSize();
                     }
                 }, 200);
+            }
+
+            // Animate rating bars when customers tab is shown
+            if (activeTabName === "customers") {
+                setTimeout(animateRatingBars, 150);
             }
         });
     });
@@ -1972,6 +1981,18 @@ function updateChartsForTheme() {
         sourceChart.data.datasets[0].borderWidth = t.isDark ? 2 : 0;
         sourceChart.update("none");
     }
+
+    // ── Service pie charts ───────────────────────────────────
+    ["fullService", "selfService", "addonService", "customerBranch"].forEach((key) => {
+        const chart = DASHBOARD_CONFIG.charts[key];
+        if (chart) {
+            chart.options.plugins.legend.labels.color = t.legendColor;
+            chart.options.plugins.tooltip.backgroundColor = t.tooltipBg;
+            chart.data.datasets[0].borderColor = t.sliceBorder;
+            chart.data.datasets[0].borderWidth = t.isDark ? 2 : 0;
+            chart.update("none");
+        }
+    });
 }
 
 /**
@@ -2121,6 +2142,221 @@ function initializeCharts() {
                 },
                 cutout: "70%",
                 animation: { animateScale: true, animateRotate: true },
+            },
+        });
+    }
+
+    // ── Customer Branch Pie Chart (walk-in vs mobile) ────────
+    const customerBranchCtx = document.getElementById("customerBranchChart");
+    if (customerBranchCtx && window.CUSTOMER_BRANCH_DATA?.length) {
+        const totalWalkIn = window.CUSTOMER_BRANCH_DATA.reduce((s, b) => s + (b.walk_in || 0), 0);
+        const totalMobile = window.CUSTOMER_BRANCH_DATA.reduce((s, b) => s + (b.mobile  || 0), 0);
+
+        DASHBOARD_CONFIG.charts.customerBranch = new Chart(customerBranchCtx, {
+            type: "doughnut",
+            data: {
+                labels: ["Walk-In", "Self-Registered"],
+                datasets: [{
+                    data: [totalWalkIn, totalMobile],
+                    backgroundColor: ["#34d399", "#818cf8"],
+                    borderColor: t.sliceBorder,
+                    borderWidth: t.isDark ? 2 : 0,
+                    hoverOffset: 14,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "68%",
+                animation: { animateScale: true, animateRotate: true },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: t.tooltipBg,
+                        titleColor: "#ffffff",
+                        bodyColor: "#e5e7eb",
+                        padding: 12,
+                        cornerRadius: 10,
+                        callbacks: {
+                            label: (ctx) => {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const pct = total > 0 ? Math.round((ctx.raw / total) * 100) : 0;
+                                return ` ${ctx.label}: ${ctx.raw.toLocaleString()} (${pct}%)`;
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    // ── Full Service Pie Chart (category: drop_off) ──────────
+    const fullServiceCtx = document.getElementById("fullServiceChart");
+    if (fullServiceCtx && window.SERVICE_CHART_DATA?.drop_off?.labels?.length) {
+        const fs = window.SERVICE_CHART_DATA.drop_off;
+        const fullColors = ["#1d4ed8","#2563eb","#3b82f6","#60a5fa","#93c5fd","#bfdbfe","#dbeafe"];
+
+        DASHBOARD_CONFIG.charts.fullService = new Chart(fullServiceCtx, {
+            type: "doughnut",
+            data: {
+                labels: fs.labels,
+                datasets: [{
+                    data: fs.counts,
+                    backgroundColor: fullColors.slice(0, fs.labels.length),
+                    borderColor: t.sliceBorder,
+                    borderWidth: t.isDark ? 2 : 0,
+                    hoverOffset: 14,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "68%",
+                animation: { animateScale: true, animateRotate: true },
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            color: t.legendColor,
+                            padding: 16,
+                            usePointStyle: true,
+                            pointStyleWidth: 10,
+                            font: { size: 12, family: "system-ui" },
+                        },
+                    },
+                    tooltip: {
+                        backgroundColor: t.tooltipBg,
+                        titleColor: "#ffffff",
+                        bodyColor: "#e5e7eb",
+                        padding: 12,
+                        cornerRadius: 10,
+                        callbacks: {
+                            label: (ctx) => {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const pct = total > 0 ? Math.round((ctx.raw / total) * 100) : 0;
+                                return ` ${ctx.label}: ${ctx.raw.toLocaleString()} orders (${pct}%)`;
+                            },
+                            afterLabel: (ctx) => {
+                                const rev = window.SERVICE_CHART_DATA.drop_off.revenues[ctx.dataIndex] ?? 0;
+                                return ` Revenue: ₱${rev.toLocaleString()}`;
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    // ── Self Service Pie Chart (category: self_service) ──────
+    const selfServiceCtx = document.getElementById("selfServiceChart");
+    if (selfServiceCtx && window.SERVICE_CHART_DATA?.self_service?.labels?.length) {
+        const ss = window.SERVICE_CHART_DATA.self_service;
+        const selfColors = ["#5b21b6","#6d28d9","#7c3aed","#8b5cf6","#a78bfa","#c4b5fd","#ede9fe"];
+
+        DASHBOARD_CONFIG.charts.selfService = new Chart(selfServiceCtx, {
+            type: "doughnut",
+            data: {
+                labels: ss.labels,
+                datasets: [{
+                    data: ss.counts,
+                    backgroundColor: selfColors.slice(0, ss.labels.length),
+                    borderColor: t.sliceBorder,
+                    borderWidth: t.isDark ? 2 : 0,
+                    hoverOffset: 14,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "68%",
+                animation: { animateScale: true, animateRotate: true },
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            color: t.legendColor,
+                            padding: 16,
+                            usePointStyle: true,
+                            pointStyleWidth: 10,
+                            font: { size: 12, family: "system-ui" },
+                        },
+                    },
+                    tooltip: {
+                        backgroundColor: t.tooltipBg,
+                        titleColor: "#ffffff",
+                        bodyColor: "#e5e7eb",
+                        padding: 12,
+                        cornerRadius: 10,
+                        callbacks: {
+                            label: (ctx) => {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const pct = total > 0 ? Math.round((ctx.raw / total) * 100) : 0;
+                                return ` ${ctx.label}: ${ctx.raw.toLocaleString()} orders (${pct}%)`;
+                            },
+                            afterLabel: (ctx) => {
+                                const rev = window.SERVICE_CHART_DATA.self_service.revenues[ctx.dataIndex] ?? 0;
+                                return ` Revenue: ₱${rev.toLocaleString()}`;
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+    // ── Add-On Pie Chart (category: addon) ───────────────────
+    const addonServiceCtx = document.getElementById("addonServiceChart");
+    if (addonServiceCtx && window.SERVICE_CHART_DATA?.addon?.labels?.length) {
+        const ad = window.SERVICE_CHART_DATA.addon;
+        const addonColors = ["#92400e","#b45309","#d97706","#f59e0b","#fbbf24","#fcd34d","#fde68a"];
+
+        DASHBOARD_CONFIG.charts.addonService = new Chart(addonServiceCtx, {
+            type: "doughnut",
+            data: {
+                labels: ad.labels,
+                datasets: [{
+                    data: ad.counts,
+                    backgroundColor: addonColors.slice(0, ad.labels.length),
+                    borderColor: t.sliceBorder,
+                    borderWidth: t.isDark ? 2 : 0,
+                    hoverOffset: 14,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "68%",
+                animation: { animateScale: true, animateRotate: true },
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            color: t.legendColor,
+                            padding: 16,
+                            usePointStyle: true,
+                            pointStyleWidth: 10,
+                            font: { size: 12, family: "system-ui" },
+                        },
+                    },
+                    tooltip: {
+                        backgroundColor: t.tooltipBg,
+                        titleColor: "#ffffff",
+                        bodyColor: "#e5e7eb",
+                        padding: 12,
+                        cornerRadius: 10,
+                        callbacks: {
+                            label: (ctx) => {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const pct = total > 0 ? Math.round((ctx.raw / total) * 100) : 0;
+                                return ` ${ctx.label}: ${ctx.raw.toLocaleString()} orders (${pct}%)`;
+                            },
+                            afterLabel: (ctx) => {
+                                const rev = window.SERVICE_CHART_DATA.addon.revenues[ctx.dataIndex] ?? 0;
+                                return ` Revenue: ₱${rev.toLocaleString()}`;
+                            },
+                        },
+                    },
+                },
             },
         });
     }
@@ -2287,5 +2523,33 @@ window.copyCoordinates = copyCoordinates;
 window.exportData = function (format) {
     alert("Export to " + format + " functionality to be implemented");
 };
+
+// Add sample pickups function (for development)
+function addSamplePickups() {
+    console.log("Adding sample pickups for development");
+    // This is just a placeholder - remove in production
+}
+
+/**
+ * RATING BARS — animate trc-star-fill widths on tab entry
+ */
+function animateRatingBars() {
+    document.querySelectorAll(".trc-star-fill").forEach((bar) => {
+        const target = bar.getAttribute("data-width") || "0";
+        bar.style.width = "0%";
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                bar.style.width = target + "%";
+            });
+        });
+    });
+}
+
+// Run on page load too in case customers tab is default
+document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("customers")?.classList.contains("active")) {
+        setTimeout(animateRatingBars, 300);
+    }
+});
 
 console.log("✅ Admin Dashboard JS loaded");

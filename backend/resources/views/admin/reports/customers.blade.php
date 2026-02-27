@@ -380,7 +380,15 @@
                                                                 </div>
                                                                 <small class="text-muted">{{ $rating->created_at->format('M d, Y') }}</small>
                                                             </div>
-                                                            <small class="text-muted d-block mb-2">Order #{{ $rating->order_number }}</small>
+                                                            <small class="text-muted d-block mb-2">
+                                                                @if($rating->laundry_id)
+                                                                    Order #{{ $rating->laundry_id }}
+                                                                @elseif($rating->branch_id)
+                                                                    Branch: {{ $rating->branch->name ?? 'N/A' }}
+                                                                @else
+                                                                    N/A
+                                                                @endif
+                                                            </small>
                                                             <small>{{ $rating->comment }}</small>
                                                         </div>
                                                     @endforeach

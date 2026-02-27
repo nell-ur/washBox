@@ -24,6 +24,11 @@ class BranchController extends Controller
         $branches = Branch::withCount(['laundries as laundries_mtd' => function($query) {
                 $query->whereMonth('created_at', Carbon::now()->month);
             }])
+            ->withAvg('ratings', 'rating')      // avg rating per branch (single SQL aggregate)
+            ->withCount('ratings')               // total review count per branch
+            ->with(['ratings' => function($q) { // lightweight eager load for per-star breakdown
+                $q->select('id', 'branch_id', 'rating');
+            }])
             ->get()
             ->map(function($branch) {
                 // Calculate MTD revenue
@@ -36,6 +41,16 @@ class BranchController extends Controller
                     ->where('role', 'staff')
                     ->where('is_active', true)
                     ->count();
+
+                // Rating convenience fields for the blade
+                $branch->avg_rating    = round((float) ($branch->ratings_avg_rating ?? 0), 1);
+                $branch->total_ratings = (int) ($branch->ratings_count ?? 0);
+
+                // Per-star breakdown [5 => n, 4 => n, 3 => n, 2 => n, 1 => n]
+                $counts = $branch->ratings->groupBy('rating')->map->count();
+                $branch->rating_distribution = collect(range(5, 1))
+                    ->mapWithKeys(fn($star) => [$star => $counts->get($star, 0)])
+                    ->toArray();
 
                 return $branch;
             });

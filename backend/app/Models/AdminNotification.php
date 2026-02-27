@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class AdminNotification extends Model
 {
@@ -25,6 +26,15 @@ class AdminNotification extends Model
     protected $casts = [
         'data' => 'array',
         'read_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    // Add this to ensure dates are always Carbon instances
+    protected $dates = [
+        'read_at',
+        'created_at',
+        'updated_at',
     ];
 
     // ===========================
@@ -71,7 +81,7 @@ class AdminNotification extends Model
     }
 
     // ===========================
-    // ACCESSORS
+    // ACCESSORS - FIXED WITH NULL CHECKS
     // ===========================
 
     public function getIsReadAttribute()
@@ -81,7 +91,16 @@ class AdminNotification extends Model
 
     public function getTimeAgoAttribute()
     {
-        return $this->created_at->diffForHumans();
+        // FIX: Check if created_at exists before calling diffForHumans()
+        if (!$this->created_at) {
+            return 'Just now'; // Default value for null dates
+        }
+
+        try {
+            return $this->created_at->diffForHumans();
+        } catch (\Exception $e) {
+            return 'Recently';
+        }
     }
 
     public function getIconClassAttribute()
@@ -100,6 +119,34 @@ class AdminNotification extends Model
         ];
 
         return $icons[$this->type] ?? 'bi-bell';
+    }
+
+    // Add this accessor to safely get created_at
+    public function getSafeCreatedAtAttribute()
+    {
+        if (!$this->created_at) {
+            return null;
+        }
+
+        try {
+            return $this->created_at->format('Y-m-d H:i:s');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    // Add this for formatted date display
+    public function getFormattedCreatedAtAttribute()
+    {
+        if (!$this->created_at) {
+            return 'Date unavailable';
+        }
+
+        try {
+            return $this->created_at->format('M d, Y h:i A');
+        } catch (\Exception $e) {
+            return 'Date unavailable';
+        }
     }
 
     // ===========================
@@ -291,5 +338,24 @@ class AdminNotification extends Model
             'color' => $color,
             'link' => $link,
         ]);
+    }
+
+    // ===========================
+    // BOOT METHOD - Add global scope to ensure dates are set
+    // ===========================
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Ensure created_at is always set when creating
+        static::creating(function ($notification) {
+            if (!$notification->created_at) {
+                $notification->created_at = now();
+            }
+            if (!$notification->updated_at) {
+                $notification->updated_at = now();
+            }
+        });
     }
 }

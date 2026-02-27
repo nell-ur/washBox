@@ -109,11 +109,17 @@ class LayoutManager {
         this.sidebar.classList.toggle('show-mobile');
         this.sidebar.classList.toggle('hide-mobile');
         this.sidebarOverlay.classList.toggle('show');
-        document.body.style.overflow = this.sidebar.classList.contains('show-mobile') ? 'hidden' : '';
+        document.body.style.overflow = isOpening ? 'hidden' : '';
 
-        this.mobileMenuToggle?.setAttribute('aria-expanded',
-            this.sidebar.classList.contains('show-mobile').toString()
-        );
+        // Animate hamburger → X
+        this.mobileMenuToggle?.classList.toggle('is-active', isOpening);
+        const icon = this.mobileMenuToggle?.querySelector('i');
+        if (icon) {
+            icon.classList.toggle('bi-list', !isOpening);
+            icon.classList.toggle('bi-x-lg', isOpening);
+        }
+
+        this.mobileMenuToggle?.setAttribute('aria-expanded', isOpening.toString());
 
         if (isOpening) {
             setTimeout(() => {
@@ -128,6 +134,15 @@ class LayoutManager {
         this.sidebar.classList.add('hide-mobile');
         this.sidebarOverlay.classList.remove('show');
         document.body.style.overflow = '';
+
+        // Reset mobile button back to hamburger
+        this.mobileMenuToggle?.classList.remove('is-active');
+        const icon = this.mobileMenuToggle?.querySelector('i');
+        if (icon) {
+            icon.classList.remove('bi-x-lg');
+            icon.classList.add('bi-list');
+        }
+
         this.mobileMenuToggle?.setAttribute('aria-expanded', 'false');
     }
 
@@ -592,7 +607,7 @@ class AdminDashboard extends LayoutManager {
         }
     }
 
-    handleKeydown(e) {
+   handleKeydown(e) {
         if (e.key === 'Escape') {
             if (window.innerWidth <= 768) {
                 this.closeMobileSidebar();
@@ -604,8 +619,33 @@ class AdminDashboard extends LayoutManager {
             }
         }
     }
-}
 
+    // ← ADD deleteNotification HERE (still inside the class)
+    async deleteNotification(id, event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        try {
+            await this.fetchWithCSRF(`/admin/notifications/${id}`, {
+                method: 'DELETE'
+            });
+
+            const notificationItem = document.querySelector(`.notification-item[onclick*="${id}"]`);
+            if (notificationItem) {
+                notificationItem.remove();
+            }
+
+            setTimeout(() => this.loadNotifications(false), 300);
+            this.showToast('Notification deleted', 'success');
+        } catch (error) {
+            console.error('Error deleting notification:', error);
+            this.showToast('Failed to delete notification', 'error');
+        }
+    }
+
+}
 // ============================================
 // STAFF NOTIFICATION SYSTEM (from staff.blade.php)
 // ============================================

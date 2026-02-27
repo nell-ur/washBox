@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Laundry;
 use App\Models\PickupRequest;
 use App\Models\Customer;
+use App\Models\CustomerRating;    // ← added for rating notifications
+use App\Models\AdminNotification; // ← admin bell reads this table, NOT notifications
 
 class NotificationService
 {
@@ -358,10 +360,12 @@ class NotificationService
                 'title' => 'Out for Delivery',
                 'body' => "Your laundry #{$laundry->tracking_number} is out for delivery!",
             ],
+            // ── Updated: prompts customer to rate after completion ────────────
             'completed' => [
-                'title' => 'Laundry Completed',
-                'body' => "Your laundry #{$laundry->tracking_number} has been completed. Thank you!",
+                'title' => '🎉 Laundry Completed!',
+                'body' => "Your laundry #{$laundry->tracking_number} is done and ready for pickup. How was your experience? Tap to leave a rating!",
             ],
+            // ─────────────────────────────────────────────────────────────────
             'cancelled' => [
                 'title' => 'Laundry Cancelled',
                 'body' => "Your laundry #{$laundry->tracking_number} has been cancelled.",
@@ -455,9 +459,120 @@ class NotificationService
             $laundry->customer_id,
             [
                 'laundries_id' => $laundry->id,
-                'tracking_number' => $laundry->tracking_number,     
+                'tracking_number' => $laundry->tracking_number,
                 'days_unclaimed' => $daysUnclaimed,
             ]
         );
+    }
+
+    // ========================================================================
+    // RATING NOTIFICATIONS  ← NEW
+    // ========================================================================
+
+    /**
+     * Notify admin + branch staff when a customer rates a completed LAUNDRY.
+     *
+     * Usage — call from CustomerRatingController::store() after rating is saved:
+     *
+     *   NotificationService::notifyLaundryRated($rating);
+     */
+    public static function notifyLaundryRated(CustomerRating $rating): void
+    {
+        $rating->loadMissing(['customer', 'branch']);
+
+        $customerName = $rating->customer?->name ?? 'A customer';
+        $branchName   = $rating->branch?->name   ?? 'the branch';
+        $orderRef     = "Order #{$rating->laundry_id}";
+        $stars        = str_repeat('★', $rating->rating) . str_repeat('☆', 5 - $rating->rating);
+        $comment      = $rating->comment ? " \"{$rating->comment}\"" : '';
+
+        $title   = 'New Laundry Rating';
+        $message = "{$customerName} rated {$orderRef} {$stars} ({$rating->rating}/5) at {$branchName}.{$comment}";
+
+        $iconColor = $rating->rating >= 4 ? 'success' : ($rating->rating >= 3 ? 'warning' : 'danger');
+
+        // ── Admin: write to admin_notifications (what the admin bell reads) ──
+        AdminNotification::create([
+            'type'       => 'new_rating',
+            'title'      => $title,
+            'message'    => $message,
+            'icon_class' => 'bi-star-fill',
+            'color'      => $iconColor,
+            'link'       => '/admin/reports/customers',
+            'is_read'    => false,
+        ]);
+
+        // ── Branch staff: write to notifications (user_id based) ─────────────
+        if ($rating->branch_id) {
+            self::sendToBranchStaff(
+                $rating->branch_id,
+                'new_rating',
+                $title,
+                $message,
+                $rating->laundry_id,
+                null,
+                $rating->customer_id,
+                [
+                    'rating_id'     => $rating->id,
+                    'laundry_id'    => $rating->laundry_id,
+                    'branch_id'     => $rating->branch_id,
+                    'rating_value'  => $rating->rating,
+                    'customer_name' => $customerName,
+                ]
+            );
+        }
+    }
+
+    /**
+     * Notify admin + branch staff when a customer rates a BRANCH directly.
+     *
+     * Usage — call from BranchRatingController::store() after rating is saved:
+     *
+     *   NotificationService::notifyBranchRated($rating);
+     */
+    public static function notifyBranchRated(CustomerRating $rating): void
+    {
+        $rating->loadMissing(['customer', 'branch']);
+
+        $customerName = $rating->customer?->name ?? 'A customer';
+        $branchName   = $rating->branch?->name   ?? 'a branch';
+        $stars        = str_repeat('★', $rating->rating) . str_repeat('☆', 5 - $rating->rating);
+        $comment      = $rating->comment ? " \"{$rating->comment}\"" : '';
+
+        $title   = 'New Branch Rating';
+        $message = "{$customerName} rated {$branchName} {$stars} ({$rating->rating}/5).{$comment}";
+
+        $iconColor = $rating->rating >= 4 ? 'success' : ($rating->rating >= 3 ? 'warning' : 'danger');
+
+        // ── Admin: write to admin_notifications (what the admin bell reads) ──
+        AdminNotification::create([
+            'type'       => 'new_branch_rating',
+            'title'      => $title,
+            'message'    => $message,
+            'icon_class' => 'bi-building',
+            'color'      => $iconColor,
+            'link'       => '/admin/reports/customers',
+            'is_read'    => false,
+        ]);
+
+        // ── Branch staff: write to notifications (user_id based) ─────────────
+        if ($rating->branch_id) {
+            self::sendToBranchStaff(
+                $rating->branch_id,
+                'new_branch_rating',
+                $title,
+                $message,
+                null,
+                null,
+                $rating->customer_id,
+                [
+                    'rating_id'     => $rating->id,
+                    'branch_id'     => $rating->branch_id,
+                    'branch_name'   => $branchName,
+                    'rating_value'  => $rating->rating,
+                    'customer_name' => $customerName,
+                ]
+            );
+        }
     }
 }

@@ -265,7 +265,9 @@ export default function RatingsScreen() {
       if (data.success) {
         Alert.alert('Thank You!', 'Your branch rating has been submitted successfully.');
         closeRatingModal();
-        await fetchData();
+        // Only refresh ratings + branches — intentionally NOT calling fetchUnratedLaundries()
+        // so the "To Rate" list stays intact after a branch rating is submitted.
+        await Promise.all([fetchMyRatings(), fetchBranches()]);
       } else {
         Alert.alert('Error', data.message || 'Failed to submit branch rating.');
       }
@@ -325,6 +327,20 @@ export default function RatingsScreen() {
   const formatPrice = (price) => {
     if (!price || isNaN(price)) return '₱0.00';
     return `₱${parseFloat(price).toFixed(2)}`;
+  };
+
+  // Resolves the correct order identifier regardless of which field the API returns
+  const getOrderNumber = (laundry) => {
+    const raw =
+      laundry.tracking_number ||   // preferred
+      laundry.laundry_number  ||   // some API versions
+      laundry.order_number    ||   // fallback
+      laundry.id;                   // last resort (numeric id)
+    // Always prefix with "Order #" so it's clear what the number is
+    const str = String(raw);
+    return str.startsWith('#') || str.toLowerCase().startsWith('order')
+      ? str
+      : `Order #${str}`;
   };
 
   const getRatingLabel = (rating) => {
@@ -521,7 +537,11 @@ export default function RatingsScreen() {
                       </View>
                       <View style={styles.ratingCardInfo}>
                         <Text style={styles.ratingTrackingNumber}>
-                          {rating.type === 'branch' ? rating.branch_name : rating.tracking_number}
+                          {rating.type === 'branch'
+                            ? (rating.branch_name || 'Branch')
+                            : (rating.tracking_number
+                                ? `Order #${rating.tracking_number}`
+                                : `Order #${rating.laundry_id || rating.id}`)}
                         </Text>
                         <Text style={styles.ratingServiceName}>
                           {rating.type === 'branch' ? 'Branch Rating' : rating.service_name}
@@ -575,7 +595,7 @@ export default function RatingsScreen() {
                       </View>
                       <View style={styles.unratedDetails}>
                         <Text style={styles.unratedTracking}>
-                          {laundry.tracking_number || `#${laundry.id}`}
+                          {getOrderNumber(laundry)}
                         </Text>
                         <Text style={styles.unratedService}>
                           {laundry.service_name} • {laundry.branch_name}
@@ -743,7 +763,7 @@ export default function RatingsScreen() {
                   </View>
                   <View>
                     <Text style={styles.modalLaundryTracking}>
-                      {selectedLaundry.tracking_number || `#${selectedLaundry.id}`}
+                      {getOrderNumber(selectedLaundry)}
                     </Text>
                     <Text style={styles.modalLaundryService}>
                       {selectedLaundry.service_name} • {selectedLaundry.branch_name}

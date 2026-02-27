@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="WashBox Staff Dashboard">
-    <title>@yield('title', 'Dashboard') - WashBox Staff</title>
+    <title>@yield('page-title', 'Dashboard') - WashBox Staff</title>
 
     <!-- Bootstrap CSS -->
     <link href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -89,8 +89,8 @@
                         <!-- Header -->
                         <div class="notification-dropdown-header">
                             <h6><i class="bi bi-bell-fill me-2"></i>Notifications</h6>
-                            <button class="btn btn-sm btn-light rounded-pill px-3" id="markAllReadBtn"
-                                    style="display: none; font-size: 0.75rem;">
+                            <button class="btn btn-sm btn-light rounded-pill px-3 mark-all-read-btn" id="markAllReadBtn"
+                                    style="display: none;">
                                 Mark all read
                             </button>
                         </div>

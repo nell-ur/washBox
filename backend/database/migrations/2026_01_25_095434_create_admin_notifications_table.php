@@ -1,5 +1,5 @@
+// database/migrations/2026_01_02_000018_create_admin_notifications_table.php
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,15 +10,15 @@ return new class extends Migration
     {
         Schema::create('admin_notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('type'); // pickup_request, new_order, payment, unclaimed, etc.
+            $table->string('type');
             $table->string('title');
             $table->text('message');
             $table->string('icon')->default('bell');
-            $table->string('color')->default('primary'); // primary, success, warning, danger, info
-            $table->string('link')->nullable(); // URL to redirect when clicked
-            $table->json('data')->nullable(); // Additional data (order_id, customer_id, etc.)
+            $table->string('color')->default('primary');
+            $table->string('link')->nullable();
+            $table->json('data')->nullable();
             $table->foreignId('branch_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete(); // Who triggered it
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });

@@ -174,6 +174,47 @@
                         </span>
                     </div>
 
+                    {{-- ── Branch Rating ─────────────────────────────────────── --}}
+                    @if($branch->total_ratings > 0)
+                    <div class="branch-rating-box mb-3">
+                        {{-- Score + stars + count --}}
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="branch-rating-score">{{ $branch->avg_rating }}</span>
+                            <div class="d-flex gap-1">
+                                @php $filled = (int) round($branch->avg_rating); @endphp
+                                @for($s = 1; $s <= 5; $s++)
+                                    <i class="bi bi-star{{ $s <= $filled ? '-fill' : '' }}"
+                                       style="font-size: .8rem; color: {{ $s <= $filled ? '#f59e0b' : '#d1d5db' }};"></i>
+                                @endfor
+                            </div>
+                            <span class="text-muted" style="font-size: .72rem;">
+                                {{ $branch->total_ratings }} {{ $branch->total_ratings == 1 ? 'review' : 'reviews' }}
+                            </span>
+                        </div>
+                        {{-- Per-star bar breakdown --}}
+                        @foreach($branch->rating_distribution as $star => $count)
+                        @php
+                            $pct      = $branch->total_ratings > 0 ? round(($count / $branch->total_ratings) * 100) : 0;
+                            $barColor = $star >= 4 ? '#f59e0b' : ($star == 3 ? '#94a3b8' : '#ef4444');
+                        @endphp
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="branch-star-lbl">{{ $star }}<i class="bi bi-star-fill ms-1" style="font-size: .5rem; color: {{ $barColor }};"></i></span>
+                            <div class="branch-bar-track flex-grow-1">
+                                <div class="branch-bar-fill" style="width: {{ $pct }}%; background: {{ $barColor }};"></div>
+                            </div>
+                            <span class="branch-bar-count">{{ $count }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <div class="mb-3">
+                        <span class="text-muted" style="font-size: .78rem; font-style: italic;">
+                            <i class="bi bi-star me-1"></i>No ratings yet
+                        </span>
+                    </div>
+                    @endif
+                    {{-- ── End Branch Rating ─────────────────────────────────── --}}
+
                     {{-- Contact Info --}}
                     <div class="mb-3 pb-3 border-bottom">
                         <div class="d-flex align-items-center text-muted small mb-2">
@@ -410,6 +451,13 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Animate rating bars on page load
+    document.querySelectorAll('.branch-bar-fill').forEach(function(el) {
+        var target = el.style.width;
+        el.style.width = '0';
+        requestAnimationFrame(function() { el.style.width = target; });
+    });
+
     // Format phone number in modal
     const phoneInput = document.querySelector('#addBranchModal input[name="phone"]');
     if (phoneInput) {
@@ -475,6 +523,65 @@ document.addEventListener('DOMContentLoaded', function() {
 
     .dropdown-item.text-success:hover {
         background-color: rgba(25, 135, 84, 0.1);
+    }
+
+    /* ── Branch Rating Block ───────────────────────────── */
+    .branch-rating-box {
+        background: #fffbeb;
+        border: 1px solid #fef3c7;
+        border-radius: 12px;
+        padding: 10px 12px;
+    }
+
+    [data-theme="dark"] .branch-rating-box {
+        background: rgba(245, 158, 11, 0.08);
+        border-color: rgba(245, 158, 11, 0.2);
+    }
+
+    .branch-rating-score {
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: #f59e0b;
+        line-height: 1;
+    }
+
+    .branch-star-lbl {
+        font-size: .65rem;
+        font-weight: 700;
+        color: #64748b;
+        width: 20px;
+        text-align: right;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 2px;
+    }
+
+    .branch-bar-track {
+        height: 6px;
+        border-radius: 99px;
+        background: #e2e8f0;
+        overflow: hidden;
+    }
+
+    .branch-bar-fill {
+        height: 100%;
+        border-radius: 99px;
+        transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .branch-bar-count {
+        font-size: .65rem;
+        font-weight: 700;
+        color: #94a3b8;
+        width: 16px;
+        text-align: right;
+        flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .branch-bar-track {
+        background: #334155;
     }
 </style>
 @endpush

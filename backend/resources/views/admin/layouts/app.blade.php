@@ -8,12 +8,12 @@
     <title>@yield('title', 'Dashboard') - WashBox Admin</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+    <link href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/bootstrap-icons.css') }}">
     <!-- Unified Layout CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/layout.css') }}">
-    
+
     @stack('styles')
 </head>
 
@@ -151,7 +151,7 @@
     <script src="{{ asset('assets/jquery/jquery-3.7.0.min.js') }}"></script>
     <!-- Unified Layout JS -->
     <script src="{{ asset('assets/js/layout.js') }}"></script>
-    
+
     @stack('scripts')
 </body>
 </html>

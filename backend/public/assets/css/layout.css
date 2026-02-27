@@ -1,10 +1,5 @@
-/* ============================================ */
-/* UNIFIED LAYOUT CSS - Combined from Admin and Staff */
-/* For WashBox Admin & Staff Dashboards */
-/* ============================================ */
-
 :root {
-    --sidebar-width: 260px;
+    --sidebar-width: 230px;
     --sidebar-collapsed-width: 80px;
     --primary-color: #2D2B5F;
     --primary-light: #3D3B7F;
@@ -469,88 +464,136 @@ pre code {
 }
 
 /* ============================================ */
-/* SIDEBAR STYLES */
+/* SIDEBAR STYLES — Improved                    */
 /* ============================================ */
+
+/* ---- Core Structure ---- */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     width: var(--sidebar-width);
-    background: linear-gradient(180deg, #2D2B5F 0%, #1c1a4e 100%);
+    background: linear-gradient(160deg, #2D2B5F 0%, #1c1a4e 60%, #130e3a 100%);
     color: var(--sidebar-text);
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 1050;
-    transition: all var(--transition-speed) var(--ease-out);
-    box-shadow: 0 10px 25px -5px rgba(45, 43, 95, 0.2);
+    transition: width var(--transition-speed) var(--ease-out),
+                transform var(--transition-speed) var(--ease-out),
+                box-shadow var(--transition-speed) ease;
     display: flex;
     flex-direction: column;
-    backdrop-filter: blur(10px);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        4px 0 24px rgba(19, 14, 58, 0.45),
+        1px 0 0 rgba(255, 255, 255, 0.06);
+    border-right: none;
 }
 
-.sidebar::-webkit-scrollbar {
-    width: 6px;
+/* Accent shimmer line on the right edge */
+.sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255, 92, 53, 0.55) 30%,
+        rgba(255, 255, 255, 0.12) 60%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
 }
 
-.sidebar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-}
-
+/* ---- Scrollbar ---- */
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
 .sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
+    background: rgba(255, 92, 53, 0.35);
+    border-radius: 4px;
 }
+.sidebar::-webkit-scrollbar-thumb:hover { background: rgba(255, 92, 53, 0.65); }
 
-.sidebar.collapsed {
-    width: var(--sidebar-collapsed-width);
-}
+/* ---- Collapsed & Mobile States ---- */
+.sidebar.collapsed { width: var(--sidebar-collapsed-width); }
 
-.sidebar.hide-mobile {
-    transform: translateX(-100%);
-}
+.sidebar.hide-mobile { transform: translateX(-100%); }
 
 .sidebar.show-mobile {
     transform: translateX(0);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 8px 0 40px rgba(13, 10, 40, 0.55), 1px 0 0 rgba(255, 255, 255, 0.06);
 }
 
+/* ---- Brand / Header Area ---- */
 .sidebar-brand {
-    padding: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: padding var(--transition-speed) ease;
+    padding: 1.375rem 1.5rem 1.25rem;
     position: relative;
+    transition: padding var(--transition-speed) ease;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Top glow line */
+.sidebar-brand::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 92, 53, 0.5), rgba(255, 255, 255, 0.2), transparent);
 }
 
 .brand-container {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.875rem;
 }
 
 .logo-container {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #FF5C35, #FF7A52);
-    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #FF5C35 0%, #ff8a6a 100%);
+    border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     transition: all var(--transition-speed) ease;
-    box-shadow: 0 4px 12px rgba(255, 92, 53, 0.3);
+    box-shadow: 0 4px 14px rgba(255, 92, 53, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%);
+    border-radius: inherit;
+}
+
+.logo-container:hover {
+    transform: scale(1.06) rotate(-3deg);
+    box-shadow: 0 6px 20px rgba(255, 92, 53, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .logo-container i {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     color: white;
+    position: relative;
+    z-index: 1;
 }
 
 .logo-circle {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto 1.5rem;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 1.25rem;
     position: relative;
 }
 
@@ -559,233 +602,403 @@ pre code {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 6px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.4);
+    border: 5px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
     background: white;
-    padding: 10px;
-    transition: all 0.3s ease;
+    padding: 8px;
+    transition: all 0.35s ease;
 }
 
 .logo-circle img:hover {
     transform: scale(1.05);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), inset 0 0 25px rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 92, 53, 0.5);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35), 0 0 0 3px rgba(255, 92, 53, 0.2);
 }
 
 .logo-circle::after {
     content: '';
     position: absolute;
-    inset: -8px;
+    inset: -6px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+    background: radial-gradient(circle, rgba(255, 92, 53, 0.12) 0%, transparent 70%);
     z-index: -1;
-    filter: blur(10px);
+    filter: blur(8px);
 }
 
-.brand-text {
-    flex: 1;
-    overflow: hidden;
-}
+.brand-text { flex: 1; overflow: hidden; }
 
 .brand-text h3 {
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     margin: 0;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+}
+
+.brand-text small {
+    font-size: 0.68rem;
+    color: rgba(255, 92, 53, 0.9);
+    display: block;
+    margin-top: 0.2rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.sidebar.collapsed .sidebar-brand { padding: 1.25rem 0.625rem; }
+.sidebar.collapsed .brand-text { display: none; }
+
+/* !important needed to override inline width/height on admin sidebar logo */
+.sidebar.collapsed .logo-container {
+    width: 44px !important;
+    height: 44px !important;
+    margin: 0 auto !important;
+    border-radius: 50% !important;
+}
+
+/* Staff sidebar logo-circle collapsed — shrink to fit 80px collapsed width */
+.sidebar.collapsed .logo-circle {
+    width: 46px !important;
+    height: 46px !important;
+    margin: 0 auto 0 !important;
+}
+
+.sidebar.collapsed .logo-circle img {
+    border-width: 2px !important;
+    padding: 4px !important;
+}
+
+.sidebar.collapsed .logo-circle::after {
+    inset: -3px !important;
+}
+
+/* ============================================================ */
+/* SIDEBAR TOGGLE BUTTON — Arrow tab, visible when collapsed   */
+/* ============================================================ */
+.sidebar-toggle-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: calc(var(--sidebar-width) - 1px);
+    transition:
+        left var(--transition-speed) var(--ease-out),
+        opacity var(--transition-speed) ease,
+        visibility var(--transition-speed) ease,
+        width 0.18s ease,
+        box-shadow 0.18s ease;
+
+    width: 22px;
+    height: 52px;
+    background: linear-gradient(160deg, #2D2B5F 0%, #1c1a4e 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1052;
+    box-shadow: 3px 0 12px rgba(19, 14, 58, 0.4);
+    color: rgba(255, 255, 255, 0.6);
+
+    /* Hidden when expanded */
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar-toggle-btn i {
+    font-size: 0.65rem;
+    transition: transform var(--transition-speed) ease, color 0.2s ease;
+}
+
+.sidebar-toggle-btn:hover {
+    width: 28px;
+    color: white;
+    background: linear-gradient(160deg, #3D3B7F 0%, #2D2B5F 100%);
+    box-shadow: 3px 0 18px rgba(255, 92, 53, 0.35);
+}
+
+.sidebar-toggle-btn:hover i {
+    color: #FF5C35;
+    transform: translateX(2px);
+}
+
+/* COLLAPSED: move to collapsed edge + show */
+.sidebar.collapsed .sidebar-toggle-btn {
+    left: calc(var(--sidebar-collapsed-width) - 1px);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* EXPANDED: hidden by default */
+.sidebar:not(.collapsed) .sidebar-toggle-btn {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* EXPANDED + hover on sidebar: faintly reveal */
+.sidebar:not(.collapsed):hover ~ * .sidebar-toggle-btn,
+.sidebar:not(.collapsed):hover .sidebar-toggle-btn {
+    opacity: 0.4;
+    visibility: visible;
+}
+
+.sidebar:not(.collapsed) .sidebar-toggle-btn:hover {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* When expanded the icon rotates 180° to become a left-arrow */
+.sidebar:not(.collapsed) .sidebar-toggle-btn i {
+    transform: rotate(180deg);
+}
+
+/* ---- Nav Labels ---- */
+.sidebar-menu {
+    list-style: none;
+    padding: 1.25rem 0 1.5rem;
+    margin: 0;
+    flex: 1;
+}
+
+.sidebar-menu .nav-label {
+    padding: 1rem 1.5rem 0.4rem;
+    color: rgba(255, 255, 255, 0.32);
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-speed) ease;
+    overflow: hidden;
+}
+
+.sidebar-menu .nav-label::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 1px;
+    background: rgba(255, 92, 53, 0.5);
+    flex-shrink: 0;
+    transition: all var(--transition-speed) ease;
+}
+
+.sidebar.collapsed .nav-label {
+    height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    overflow: hidden;
+}
+
+/* ---- Menu Items ---- */
+.sidebar-menu li { position: relative; }
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.375rem;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    transition:
+        background 0.22s ease,
+        color 0.22s ease,
+        padding-left 0.2s ease,
+        border-left-color 0.22s ease;
+    white-space: nowrap;
+    position: relative;
+    border-left: 3px solid transparent;
+    border-radius: 0 8px 8px 0;
+    margin-right: 0.75rem;
+}
+
+.sidebar-menu li a i {
+    margin-right: 0.875rem;
+    font-size: 1.15rem;
+    min-width: 22px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: margin-right var(--transition-speed) ease, color 0.22s ease, transform 0.22s ease;
+}
+
+.sidebar-menu li a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    border-left-color: rgba(255, 255, 255, 0.22);
+    padding-left: 1.625rem;
+}
+
+.sidebar-menu li a:hover i {
+    color: rgba(255, 92, 53, 0.9);
+    transform: translateX(2px);
+}
+
+.sidebar-menu li a.active {
+    background: linear-gradient(90deg, rgba(255, 92, 53, 0.2) 0%, rgba(255, 92, 53, 0.05) 100%);
+    color: white;
+    border-left-color: #FF5C35;
+    font-weight: 600;
+}
+
+.sidebar-menu li a.active i { color: #FF5C35; }
+
+/* Right-side glowing dot on active items */
+.sidebar-menu li a.active::after {
+    content: '';
+    position: absolute;
+    right: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #FF5C35;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 92, 53, 0.9);
+}
+
+/* Collapsed icon mode */
+.sidebar.collapsed .sidebar-menu li a {
+    justify-content: center;
+    padding: 0.8rem 0;
+    border-left: none;
+    border-radius: 10px;
+    margin: 0.1rem 0.6rem;
+}
+
+.sidebar.collapsed .sidebar-menu li a:hover {
+    padding-left: 0;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar.collapsed .sidebar-menu li a i { margin-right: 0; font-size: 1.25rem; }
+
+.sidebar.collapsed .sidebar-menu li a.active {
+    background: rgba(255, 92, 53, 0.18);
+    padding-left: 0;
+}
+
+.sidebar.collapsed .sidebar-menu li a.active::after {
+    right: 4px;
+    top: 4px;
+    transform: none;
+    width: 5px;
+    height: 5px;
+}
+
+/* ---- Menu text fade ---- */
+.sidebar-menu .menu-text {
+    transition: opacity var(--transition-speed) ease, max-width var(--transition-speed) ease;
+    max-width: 200px;
+    overflow: hidden;
+}
+
+.sidebar.collapsed .menu-text { opacity: 0; max-width: 0; }
+
+/* ---- Badges ---- */
+.sidebar-menu .badge {
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6rem;
+    padding: 0.2rem 0.45rem;
+    background: linear-gradient(135deg, #FF5C35, #ff8a6a);
+    box-shadow: 0 2px 8px rgba(255, 92, 53, 0.45);
+    border: none;
+    letter-spacing: 0.02em;
+    transition: all var(--transition-speed) ease;
+}
+
+.sidebar.collapsed .sidebar-menu .badge {
+    right: 2px;
+    top: 2px;
+    transform: none;
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0;
+    min-width: unset;
+}
+
+/* ---- Sidebar Footer Strip ---- */
+.sidebar-footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: padding var(--transition-speed) ease;
+}
+
+.sidebar-footer-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.sidebar-footer-info {
+    flex: 1;
+    overflow: hidden;
+    transition: opacity var(--transition-speed) ease, max-width var(--transition-speed) ease;
+    max-width: 200px;
+}
+
+.sidebar-footer-info .footer-name {
+    font-size: 0.8rem;
+    font-weight: 600;
     color: white;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.brand-text small {
-    font-size: 0.75rem;
-    opacity: 0.8;
-    color: rgba(255, 255, 255, 0.7);
-    display: block;
-    margin-top: 0.25rem;
-}
-
-.sidebar.collapsed .sidebar-brand {
-    padding: 1.5rem 0.75rem;
-}
-
-.sidebar.collapsed .brand-text {
-    display: none;
-}
-
-.sidebar.collapsed .logo-container {
-    width: 44px;
-    height: 44px;
-    margin: 0 auto;
-}
-
-.sidebar-toggle-btn {
-    position: absolute;
-    top: 50%;
-    right: -12px;
-    transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
-    background: white;
-    border: 2px solid var(--sidebar-bg);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1051;
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-speed) ease;
-    color: var(--primary-color);
-}
-
-.sidebar-toggle-btn:hover {
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: var(--shadow-lg);
-}
-
-.sidebar-toggle-btn i {
-    font-size: 0.75rem;
-    transition: transform var(--transition-speed) ease;
-}
-
-.sidebar.collapsed .sidebar-toggle-btn i {
-    transform: rotate(180deg);
-}
-
-.sidebar-menu {
-    list-style: none;
-    padding: 1.5rem 0;
-    margin: 0;
-    flex: 1;
-}
-
-.sidebar-menu .nav-label {
-    padding: 0.75rem 1.5rem 0.5rem;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.7rem;
+.sidebar-footer-info .footer-role {
+    font-size: 0.67rem;
+    color: rgba(255, 92, 53, 0.85);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin-top: 0.5rem;
-    display: block;
-    transition: padding var(--transition-speed) ease;
-}
-
-.sidebar.collapsed .nav-label {
-    text-align: center;
-    padding: 0.75rem 0.5rem 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin: 1rem 0.5rem 0.5rem;
-}
-
-.sidebar-menu li {
-    position: relative;
-}
-
-.sidebar-menu li a {
-    display: flex;
-    align-items: center;
-    padding: 0.875rem 1.5rem;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: all 0.25s ease;
-    white-space: nowrap;
-    position: relative;
-    border-left: 3px solid transparent;
-}
-
-.sidebar-menu li a i {
-    margin-right: 1rem;
-    font-size: 1.2rem;
-    min-width: 24px;
-    text-align: center;
-    transition: margin-right var(--transition-speed) ease;
-}
-
-.sidebar-menu li a:hover {
-    background: var(--sidebar-hover);
-    color: white;
-    border-left-color: rgba(255, 255, 255, 0.3);
-}
-
-.sidebar-menu li a.active {
-    background: rgba(255, 92, 53, 0.15);
-    color: white;
-    border-left-color: #FF5C35;
+    letter-spacing: 0.06em;
     font-weight: 500;
 }
 
-.sidebar-menu li a.active::before {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 20px;
-    background: #FF5C35;
-    border-radius: 2px 0 0 2px;
-}
+.sidebar.collapsed .sidebar-footer { padding: 1rem 0.625rem; justify-content: center; }
+.sidebar.collapsed .sidebar-footer-info { opacity: 0; max-width: 0; }
 
-.sidebar.collapsed .sidebar-menu li a {
-    justify-content: center;
-    padding: 0.875rem 0.75rem;
-    border-left: none;
-}
-
-.sidebar.collapsed .sidebar-menu li a i {
-    margin-right: 0;
-    font-size: 1.3rem;
-}
-
-.sidebar.collapsed .sidebar-menu li a.active::before {
-    right: -3px;
-}
-
-.sidebar-menu .menu-text {
-    transition: opacity var(--transition-speed) ease;
-}
-
-.sidebar.collapsed .menu-text {
-    opacity: 0;
-    width: 0;
-    overflow: hidden;
-}
-
-.sidebar-menu .badge {
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.65rem;
-    padding: 0.25rem 0.5rem;
-    background: var(--accent-color);
-}
-
-.sidebar.collapsed .sidebar-menu .badge {
-    right: 0.25rem;
-    top: 0.25rem;
-    transform: none;
-}
-
+/* ---- Overlay ---- */
 .sidebar-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(13, 10, 40, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     z-index: 1049;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.sidebar-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
+.sidebar-overlay.show { opacity: 1; visibility: visible; }
 
 /* ============================================ */
 /* MAIN CONTENT */
@@ -868,22 +1081,32 @@ pre code {
 .mobile-menu-btn {
     display: none;
     background: none;
-    border: none;
-    font-size: 1.5rem;
+    border: 1px solid var(--border-color);
+    font-size: 1.35rem;
     color: var(--text-primary);
     cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    transition: all 0.2s ease;
-    width: 44px;
-    height: 44px;
+    padding: 0;
+    border-radius: 9px;
+    transition: all 0.25s ease;
+    width: 40px;
+    height: 40px;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .mobile-menu-btn:hover {
     background: var(--border-color);
-    transform: translateY(-1px);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* Active state (sidebar open) — becomes X */
+.mobile-menu-btn.is-active {
+    background: rgba(255, 92, 53, 0.08);
+    border-color: rgba(255, 92, 53, 0.3);
+    color: #FF5C35;
 }
 
 .topbar-right {
@@ -1658,16 +1881,16 @@ pre code {
 }
 
 /* ============================================ */
-/* DROPDOWN MENU STYLES */
+/* SIDEBAR SUB-NAV DROPDOWN STYLES — Improved  */
 /* ============================================ */
 
-/* Dropdown Container */
+/* Container */
 .dropdown-container {
     position: relative;
     width: 100%;
 }
 
-/* Dropdown Toggle */
+/* Toggle row */
 .dropdown-toggle {
     cursor: pointer;
     display: flex;
@@ -1677,112 +1900,144 @@ pre code {
     user-select: none;
 }
 
-/* Dropdown Arrow */
+/* Animated chevron arrow */
 .dropdown-arrow {
-    transition: transform 0.3s ease;
+    transition: transform 0.28s var(--ease-out), color 0.2s ease;
     margin-left: auto;
-    font-size: 0.8rem;
-    opacity: 0.8;
+    font-size: 0.68rem;
+    opacity: 0.6;
+    flex-shrink: 0;
 }
 
 .dropdown-arrow.rotated {
     transform: rotate(180deg);
+    opacity: 1;
+    color: #FF5C35;
 }
 
-/* Dropdown Menu Items */
+/* Sub-menu list */
 .dropdown-menu-items {
     display: none;
     list-style: none;
-    padding: 0.5rem 0;
+    padding: 0.25rem 0;
     margin: 0;
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 0 0 8px 8px;
+    background: rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .dropdown-menu-items.show {
     display: block;
+    animation: subMenuOpen 0.22s var(--ease-out) forwards;
 }
 
-.dropdown-menu-items .nav-item {
-    margin: 0.1rem 0;
+@keyframes subMenuOpen {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
+
+.dropdown-menu-items .nav-item { margin: 0; }
 
 .dropdown-menu-items .nav-link {
-    padding: 0.6rem 1rem 0.6rem 3.2rem !important;
-    font-size: 0.85rem;
+    padding: 0.6rem 1rem 0.6rem 3.25rem !important;
+    font-size: 0.82rem;
     border-left: none !important;
+    border-radius: 0 !important;
+    margin-right: 0 !important;
+    color: rgba(255, 255, 255, 0.6) !important;
     display: flex;
     align-items: center;
     white-space: nowrap;
+    transition: all 0.2s ease !important;
 }
 
 .dropdown-menu-items .nav-link i {
-    font-size: 0.9rem;
-    width: 24px;
-    margin-right: 0.75rem;
+    font-size: 0.85rem;
+    width: 20px;
+    margin-right: 0.625rem;
+    color: rgba(255, 255, 255, 0.42);
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .dropdown-menu-items .nav-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.07) !important;
+    color: white !important;
+    padding-left: 3.5rem !important;
+}
+
+.dropdown-menu-items .nav-link:hover i {
+    color: rgba(255, 92, 53, 0.85);
+    transform: translateX(2px);
 }
 
 .dropdown-menu-items .nav-link.active {
-    background: rgba(255, 92, 53, 0.15);
-    color: white;
+    background: rgba(255, 92, 53, 0.12) !important;
+    color: white !important;
     font-weight: 500;
 }
 
-/* Badge container for dropdown arrow */
+.dropdown-menu-items .nav-link.active i { color: #FF5C35; }
+
+/* Badge container */
 .badge-container {
     margin-left: auto;
     display: flex;
     align-items: center;
+    gap: 0.4rem;
 }
 
-/* Active state for parent dropdown */
+/* Active parent */
 .dropdown-container.active > .dropdown-toggle {
-    background: rgba(255, 92, 53, 0.15);
-    color: white;
-    border-left-color: #FF5C35;
+    background: linear-gradient(90deg, rgba(255, 92, 53, 0.15) 0%, rgba(255, 92, 53, 0.04) 100%) !important;
+    color: white !important;
+    border-left-color: #FF5C35 !important;
 }
 
-/* Collapsed Sidebar Dropdown Styles */
+/* Collapsed flyout */
 .sidebar.collapsed .dropdown-menu-items.show {
     position: fixed;
     left: var(--sidebar-collapsed-width);
     top: auto;
-    background: linear-gradient(180deg, #2D2B5F 0%, #1c1a4e 100%);
-    border-radius: 0 8px 8px 0;
+    background: linear-gradient(160deg, #2D2B5F 0%, #1c1a4e 100%);
+    border-radius: 0 12px 12px 0;
     padding: 0.5rem;
-    min-width: 200px;
+    min-width: 190px;
     max-height: none;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 6px 6px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
     z-index: 1060;
+    border: none;
+    animation: flyoutOpen 0.2s var(--ease-out) forwards;
+}
+
+@keyframes flyoutOpen {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
 }
 
 .sidebar.collapsed .dropdown-menu-items .nav-link {
-    padding: 0.6rem 1rem !important;
+    padding: 0.625rem 1rem !important;
+    border-radius: 8px !important;
 }
 
-.sidebar.collapsed .dropdown-toggle .dropdown-arrow {
-    display: none;
+.sidebar.collapsed .dropdown-menu-items .nav-link:hover {
+    padding-left: 1rem !important;
 }
+
+.sidebar.collapsed .dropdown-toggle .dropdown-arrow { display: none; }
 
 /* ============================================ */
-/* RESPONSIVE DESIGN */
+/* RESPONSIVE DESIGN                            */
 /* ============================================ */
 @media (max-width: 768px) {
     .sidebar {
         transform: translateX(-100%);
-        width: 300px;
+        width: 280px;
         z-index: 1050;
-        transition: transform 0.3s var(--ease-out);
+        transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease;
     }
 
     .sidebar.show-mobile {
         transform: translateX(0);
-        box-shadow: var(--shadow-xl);
+        box-shadow: 8px 0 40px rgba(13, 10, 40, 0.55);
     }
 
     .main-content {
@@ -1794,8 +2049,9 @@ pre code {
         display: flex;
     }
 
+    /* Hide the edge-tab toggle entirely on mobile */
     .sidebar-toggle-btn {
-        display: none;
+        display: none !important;
     }
 
     .topbar {
@@ -1844,7 +2100,7 @@ pre code {
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .sidebar {
-        width: 220px;
+        width: 200px;
     }
 
     .sidebar.collapsed {
@@ -1852,11 +2108,22 @@ pre code {
     }
 
     .main-content {
-        margin-left: 220px;
+        margin-left: 200px;
     }
 
     .main-content.expanded {
         margin-left: var(--sidebar-collapsed-width);
+    }
+
+    /* On tablet, toggle tab is always faintly visible */
+    .sidebar:not(.collapsed) .sidebar-toggle-btn {
+        opacity: 0.4;
+        visibility: visible;
+        left: calc(200px - 1px);
+    }
+
+    .sidebar:not(.collapsed) .sidebar-toggle-btn:hover {
+        opacity: 1;
     }
 }
 
@@ -1899,4 +2166,86 @@ pre code {
     .content-area {
         padding: 0;
     }
+}
+
+/* ============================================ */
+/* SIDEBAR DENSITY REDUCTION — ~75-80% compact  */
+/* ============================================ */
+
+/* Brand area — tighter top/bottom padding */
+.sidebar-brand {
+    padding: 0.85rem 1.25rem 0.8rem !important;
+}
+
+/* Logo — from 130px down to 78px */
+.logo-circle {
+    width: 78px !important;
+    height: 78px !important;
+    margin: 0 auto 0.6rem !important;
+}
+
+.logo-circle img {
+    border: 3px solid rgba(255, 255, 255, 0.25) !important;
+    padding: 5px !important;
+}
+
+/* Brand title — slightly smaller */
+.brand-text h3 {
+    font-size: 0.9rem !important;
+}
+
+/* Branch subtitle */
+.brand-text small {
+    font-size: 0.6rem !important;
+    margin-top: 0.1rem !important;
+}
+
+/* Nav section labels — tighter spacing */
+.sidebar-menu .nav-label {
+    padding: 0.6rem 1.25rem 0.25rem !important;
+    font-size: 0.6rem !important;
+    margin-top: 0.2rem !important;
+}
+
+/* Nav links — reduced vertical padding */
+.sidebar-menu li a {
+    padding: 0.5rem 1.25rem !important;
+}
+
+/* Nav icons — slightly smaller */
+.sidebar-menu li a i {
+    font-size: 1rem !important;
+    margin-right: 0.75rem !important;
+    min-width: 18px !important;
+}
+
+/* Menu text — slightly smaller */
+.sidebar-menu .menu-text {
+    font-size: 0.835rem !important;
+}
+
+/* Hover indent — match new base padding */
+.sidebar-menu li a:hover {
+    padding-left: 1.5rem !important;
+}
+
+/* Active dot — reposition for new padding */
+.sidebar-menu li a.active::after {
+    right: 0.75rem !important;
+}
+
+/* HR divider — tighter margin */
+.sidebar-menu hr {
+    margin: 0.4rem 0.875rem !important;
+}
+
+/* Collapsed state — keep icons centered */
+.sidebar.collapsed .sidebar-menu li a {
+    padding: 0.6rem 0 !important;
+}
+
+/* Sub-menu items (Services & Add-ons dropdown) */
+.dropdown-menu-items .nav-link {
+    padding: 0.45rem 1rem 0.45rem 2.75rem !important;
+    font-size: 0.78rem !important;
 }
